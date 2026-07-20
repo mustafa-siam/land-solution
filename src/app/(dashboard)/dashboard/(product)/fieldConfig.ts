@@ -1,0 +1,247 @@
+import { IFields } from "@/Type/IFields";
+
+export const fieldConfig: IFields[] = [
+  {
+    label: "Title",
+    valueKey: "title",
+    placeholder: "Enter the title",
+    type: "text",
+    formType: "string",
+    required: true,
+  },
+  {
+    label: "Description",
+    valueKey: "description",
+    placeholder: "Enter the description",
+    type: "richtext",
+    formType: "string",
+    required: true,
+  },
+  {
+    label: "Location",
+    valueKey: "location",
+    placeholder: "Enter the location",
+    type: "text",
+    formType: "string",
+    required: true,
+  },
+  {
+    label: "Video Link",
+    valueKey: "video",
+    placeholder: "Enter the video link",
+    type: "text",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Price",
+    valueKey: "price",
+    placeholder: "Enter the price",
+    type: "number",
+    formType: "string",
+    required: true,
+  },
+  {
+    label: "Extra Features", // Fixed spelling
+    valueKey: "feature",
+    placeholder: "Enter the extra features",
+    type: "keywords",
+    formType: "array",
+    required: false,
+  },
+  {
+    label: "Terms and Conditions", // Fixed casing
+    valueKey: "termsAndConditions",
+    placeholder: "Enter the terms and conditions",
+    type: "richtext",
+    formType: "string",
+    required: true,
+  },
+  {
+    label: "Phone Number",
+    valueKey: "phone",
+    placeholder: "Enter the phone number",
+    type: "text",
+    formType: "string",
+    required: true,
+  },
+  {
+    label: "Image",
+    valueKey: "image",
+    placeholder: "Upload an image",
+    type: "image",
+    formType: "file",
+    multiple: true,
+    maxFiles: 25,
+    minFiles: 1, 
+    required: true, 
+  },
+  {
+    label: "Corridor", // Fixed "Coulidoor" to "Corridor"
+    valueKey: "condition",
+    placeholder: "Enter the corridor details",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Bedrooms",
+    valueKey: "bedrooms",
+    placeholder: "Enter number of bedrooms",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Bathrooms",
+    valueKey: "bathrooms",
+    placeholder: "Enter number of bathrooms",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Balcony",
+    valueKey: "balcony",
+    placeholder: "Enter number of balconies",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Floor Level", // Added space
+    valueKey: "floorLevel",
+    placeholder: "Enter the floor level",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Total Floors", // Added space and pluralized
+    valueKey: "totalFloor",
+    placeholder: "Enter total floors",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Size (sq ft)", // Cleaned up unit casing
+    valueKey: "sizeSqft",
+    placeholder: "Enter the size (sq ft)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  // {
+  //   label: "Drawing Space", // Added space
+  //   valueKey: "drawingSpace",
+  //   placeholder: "Enter drawing space details",
+  //   type: "number",
+  //   formType: "string",
+  //   required: false,
+  // },
+  // {
+  //   label: "Dining Room", // Added space
+  //   valueKey: "diningRoom",
+  //   placeholder: "Enter dining room details",
+  //   type: "number",
+  //   formType: "string",
+  //   required: false,
+  // },
+  // {
+  //   label: "Kitchen",
+  //   valueKey: "kitchen",
+  //   placeholder: "Enter kitchen details",
+  //   type: "number",
+  //   formType: "string",
+  //   required: false,
+  // },
+  // {
+  //   label: "Parking",
+  //   valueKey: "parking",
+  //   placeholder: "Enter parking details",
+  //   type: "number",
+  //   formType: "string",
+  //   required: false,
+  // },
+  {
+    label: "College / University (KM)", // Fixed spacing
+    valueKey: "collegeUniversity",
+    placeholder: "Distance to College/University (KM)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Hospital / Clinic (KM)", // Fixed spacing
+    valueKey: "hospitalClinic",
+    placeholder: "Distance to Hospital/Clinic (KM)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Mosque (KM)",
+    valueKey: "mosque",
+    placeholder: "Distance to Mosque (KM)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Supermarket / Grocery (KM)", // Fixed spacing
+    valueKey: "supermarketGrocery",
+    placeholder: "Distance to Supermarket/Grocery (KM)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Bank / ATM (KM)", // Fixed spacing
+    valueKey: "bankATM",
+    placeholder: "Distance to Bank/ATM (KM)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Bus / Metro Station (KM)", // Fixed spacing
+    valueKey: "busMetroStation",
+    placeholder: "Distance to Bus/Metro (KM)",
+    type: "number",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Full Address",
+    valueKey: "fullAddress",
+    placeholder: "Enter the full address",
+    type: "text",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Google Maps Embed Link (Iframe)",
+    valueKey: "googleMap",
+    placeholder: "Paste the <iframe> code or URL here",
+    type: "text",
+    formType: "string",
+    required: false,
+  },
+  {
+    label: "Meta SEO Tags", // Pluralized
+    valueKey: "metaSeoTags",
+    placeholder: "Enter Meta SEO tags",
+    type: "keywords",
+    formType: "array",
+    required: false,
+  },
+  {
+    label: "Meta SEO Description",
+    valueKey: "metaSeoDescription",
+    placeholder: "Enter Meta SEO description",
+    type: "text",
+    formType: "string",
+    required: false,
+  },
+];

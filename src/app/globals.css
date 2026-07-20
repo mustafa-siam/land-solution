@@ -1,0 +1,362 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+/* 
+@font-face {
+  font-family: "horizontal ";
+  src: url("../components/fonts/fonnts.com-solaimanlipi.ttf") format("truetype");
+} */
+
+@theme {
+  /* Light Theme Colors */
+  --color-vibrant-lime: #6EB52C; /* Bright, energetic green */
+  --color-deep-charcoal: #05040B; /* Extremely dark, nearly black */
+  --color-medium-dusk: #696969; /* Medium-dark gray, like dusk */
+  --color-pale-mint: #F0F2EE; /* Very light, slightly cool gray/off-white */
+  --color-moss-green: #668945; /* Earthy, muted olive-green */
+
+  /* New User-Defined Colors (Reds and Grays) */
+  --color-ruby-wine: #153E44; /* Deep, rich red with a hint of purple/brown */
+  --color-dark-slate: #333333; /* Standard dark gray/off-black */
+  --color-shadow-gray: #4D4D4D; /* Mid-to-dark muted gray */
+  --color-misty-silver: #BDBDBD; /* Light, neutral gray */
+  --color-porcelain-white: #E7ECEF; /* Extremely light, near-white gray */
+  --color-night-black: #262626; /* Very dark, true black substitute */
+
+   /* Font Variable */
+  --font-yanone-kaffeesatz: var(--font-yanone-kaffeesatz); /* Link to Merriweather from next/font/google */
+
+}
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+body {
+  /* background: var(--background);
+  color: var(--foreground); */
+  scroll-behavior: smooth;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================ */
+/* NextTopLoader Progress Bar Styles */
+/* ============================================ */
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 8px rgba(139, 92, 246, 0.3);
+  backdrop-filter: blur(2px);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 10px rgba(139, 92, 246, 0.6);
+  opacity: 1;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Dark mode support for progress bar */
+.dark #nprogress .bar {
+  background: linear-gradient(90deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+  box-shadow: 0 0 15px rgba(96, 165, 250, 0.6), 0 0 8px rgba(167, 139, 250, 0.4);
+}
+
+.dark #nprogress .peg {
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.9), 0 0 10px rgba(167, 139, 250, 0.7);
+}
+
+
+/* ===========================
+   Base Editor Styles
+=========================== */
+.ProseMirror {
+  line-height: 1.6;
+  font-size: 16px;
+  color: #111827;
+  padding: 6px 0;
+}
+
+.ProseMirror p {
+  margin: 0 0 12px 0;
+}
+
+.ProseMirror br {
+  content: "";
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ===========================
+   Headings (h1–h6)
+=========================== */
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.ProseMirror h1 {
+  font-size: 32px;
+}
+
+.ProseMirror h2 {
+  font-size: 28px;
+}
+
+.ProseMirror h3 {
+  font-size: 24px;
+}
+
+.ProseMirror h4 {
+  font-size: 20px;
+}
+
+.ProseMirror h5 {
+  font-size: 18px;
+}
+
+.ProseMirror h6 {
+  font-size: 16px;
+  color: #374151;
+}
+
+/* ===========================
+   Bold, Italic, Underline, etc.
+=========================== */
+.ProseMirror strong {
+  font-weight: 600;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+.ProseMirror u {
+  text-decoration: underline;
+}
+
+.ProseMirror s {
+  text-decoration: line-through;
+}
+
+/* Highlight */
+.ProseMirror mark {
+  background-color: #fde047;
+}
+
+/* ===========================
+   Blockquote
+=========================== */
+.ProseMirror blockquote {
+  border-left: 4px solid #6b7280;
+  padding-left: 12px;
+  color: #4b5563;
+  margin: 12px 0;
+  font-style: italic;
+}
+
+/* ===========================
+   Lists
+=========================== */
+.ProseMirror ul {
+  list-style-type: disc;
+  margin-left: 24px;
+  margin-bottom: 10px;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal;
+  margin-left: 24px;
+  margin-bottom: 10px;
+}
+
+.ProseMirror li {
+  margin: 4px 0;
+}
+
+/* ===========================
+   Code Block
+=========================== */
+.ProseMirror pre {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+}
+
+.ProseMirror pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Inline code */
+.ProseMirror code {
+  background: #f3f4f6;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ===========================
+   Tables (your version + improved)
+=========================== */
+.ProseMirror table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0;
+  font-size: 16px;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  border: 1px solid #d1d5db;
+  padding: 8px;
+  text-align: left;
+}
+
+.ProseMirror th {
+  background-color: #75203D;
+  color: white;
+  font-weight: 600;
+}
+
