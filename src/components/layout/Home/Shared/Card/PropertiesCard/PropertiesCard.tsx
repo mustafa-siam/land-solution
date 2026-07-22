@@ -1,24 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Heart, HeartOff } from 'lucide-react'
+"use client"
+import { Bed, Bath, Ruler, Heart, HeartOff } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { FaLocationDot } from 'react-icons/fa6'
-import { MdVerifiedUser } from 'react-icons/md'
 import { toast } from 'sonner'
 
 export default function PropertiesCard({ item }: { item: any }) {
   const [isSaved, setIsSaved] = useState(false);
-  const slug = item?.slug;
+  const slug = item?.slug || item?._id;
 
   // 1. Check if item is favorited on mount
   useEffect(() => {
+    if (!slug) return;
     const favorites = JSON.parse(localStorage.getItem("boomboxFavorites") || "[]");
     setIsSaved(favorites.includes(slug));
   }, [slug]);
 
   // 2. Toggle Favorite logic
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!slug) return;
+
     const favorites = JSON.parse(localStorage.getItem("boomboxFavorites") || "[]");
 
     if (isSaved) {
@@ -36,54 +42,93 @@ export default function PropertiesCard({ item }: { item: any }) {
     }
   };
 
-  return (
-    <div className="rounded bg-[#F5F5F5] group transition-all duration-300 hover:shadow-lg overflow-hidden">
-      <div className="w-full h-60 relative">
-        <Image
-          width={400} // Increased for better quality
-          height={300}
-          src={item?.image[0]}
-          alt={item?.title}
-          className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
-        />
-        <div className="absolute bottom-2 left-2 flex justify-end items-end gap-2 text-sm">
-          {item?.verification && (
-            <p className='flex items-center gap-1 bg-[#0F9918] text-white px-3 py-1 rounded-full shadow-sm'>
-              <MdVerifiedUser />Verified
-            </p>
-          )}
-          <p className='bg-[#333333] text-white px-3 py-1 rounded-full shadow-sm'>
-            For {item?.categoryId?.title}
-          </p>
-        </div>
-      </div>
+  // UI Helpers
+  const fallbackImage = "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=85";
+  const displayImage = item?.image?.[0] || item?.images?.[0] || fallbackImage;
+  const isRent = item?.purpose?.toLowerCase() === 'rent' || item?.type?.toLowerCase() === 'rent';
 
-      <div className="p-5 space-y-2">
-        <Link 
-          href={`/properties/${item?.slug}`} 
-          className='text-xl font-medium font-yanone-kaffeesatz transition-colors duration-300 group-hover:text-ruby-wine block'
-        >
-          {item?.title}
+  const rawPrice = item?.price || 0;
+  const formattedPriceBdt = `৳${rawPrice.toLocaleString()}`;
+  const badgeText = item?.badgeText || (item?.verification ? "VERIFIED LISTING" : "EXCLUSIVE LISTING");
+
+  return (
+    <div className="group flex flex-col h-full bg-white transition-all relative">
+      {/* Image Container with Dark Overlay Badge & Favorite Button */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100 mb-3 rounded">
+        <Link href={`/properties/${slug}`}>
+          <Image
+            src={displayImage}
+            alt={item?.title || "Property"}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         </Link>
         
-        <p className="flex items-center gap-2 text-gray-600">
-          <FaLocationDot className="text-ruby-wine" />
-          {item?.location}
-        </p>
+        {/* Top Left Dark Translucent Badge */}
+        <div className="absolute top-3 left-3 pointer-events-none">
+          <span className="bg-black/60 backdrop-blur-md text-white text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 inline-block">
+            {badgeText}
+          </span>
+        </div>
 
-        <div className="flex justify-between items-center pt-2 border-t border-gray-200 font-medium text-ruby-wine">
-          <p className="text-lg">BDT {item?.price}</p>
-          
-          <div onClick={handleToggleFavorite} className="cursor-pointer p-1 transition-transform active:scale-90">
-            {isSaved ? (
-              <div className="flex items-center gap-1 text-ruby-wine">
-                <HeartOff size={22} fill="currentColor" />
-              </div>
-            ) : (
-              <Heart size={22} className="hover:fill-ruby-wine transition-colors" />
-            )}
+        {/* Top Right Wishlist / Favorite Icon Button */}
+        <button
+          onClick={handleToggleFavorite}
+          type="button"
+          aria-label="Add to wishlist"
+          className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 hover:bg-white text-gray-700 hover:text-red-500 backdrop-blur-sm transition-all shadow-sm active:scale-90"
+        >
+          {isSaved ? (
+            <HeartOff className="w-4 h-4 text-red-500" fill="currentColor" />
+          ) : (
+            <Heart className="w-4 h-4 hover:text-red-500 transition-colors" />
+          )}
+        </button>
+      </div>
+
+      {/* Content Block */}
+      <div className="flex flex-col flex-grow">
+        
+        {/* Price Section */}
+        <div className="mb-2">
+          <div className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">
+            <Link href={`/properties/${slug}`} className="hover:underline">
+              {formattedPriceBdt}
+            </Link>
+            {isRent && <span className="text-xs text-gray-500 font-normal"> /mo</span>}
           </div>
         </div>
+
+        {/* Title */}
+        <Link href={`/properties/${slug}`} className="text-sm font-semibold text-gray-800 line-clamp-1 hover:text-blue-600 transition-colors mb-2">
+          {item?.title || "Untitled Property"}
+        </Link>
+
+        {/* Specifications Row with Lucide Icons */}
+        <div className="flex items-center gap-4 text-xs text-gray-600 mb-2 font-normal border-y border-gray-200 py-2.5">
+          <span className="flex items-center gap-1.5">
+            <Bed className="w-4 h-4 text-gray-500 stroke-[1.75]" />
+            {item?.beds || item?.bedrooms || 0} beds
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Bath className="w-4 h-4 text-gray-500 stroke-[1.75]" />
+            {item?.baths || item?.bathrooms || 0} baths
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Ruler className="w-4 h-4 text-gray-500 stroke-[1.75]" />
+            {item?.area ? Number(item.area).toLocaleString() : 0} sqft
+          </span>
+        </div>
+
+        {/* Location / Address Line with Location Icon */}
+        <div className="flex items-center gap-1.5 text-xs text-gray-400 truncate mt-auto">
+          <FaLocationDot className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+          <span className="truncate">
+            {item?.location || item?.address || "Location Unavailable"}
+          </span>
+        </div>
+
       </div>
     </div>
   )

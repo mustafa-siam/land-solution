@@ -9,12 +9,12 @@ export default function UrbanKeys() {
   const transformationImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85";
 
   return (
-    <section className="px-[5%] py-20 bg-white overflow-hidden font-sans">
+    <section className="px-[5%] pt-16 bg-white overflow-hidden font-sans">
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
         {/* Left Side: Modern Image Frame Showcase */}
         <div className="lg:col-span-6 relative group">
-          <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-xl border border-gray-100">
+          <div className="relative aspect-[4/3] w-full  overflow-hidden shadow-xl border border-gray-100">
             <Image
               src={transformationImage}
               alt="Home Staging Luxury Transformation"
