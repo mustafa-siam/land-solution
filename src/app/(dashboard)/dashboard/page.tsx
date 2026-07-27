@@ -92,7 +92,7 @@ export default function DashboardHomePage() {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Latest item submission status</p>
             </div>
             <Button variant="ghost" size="sm" asChild className="gap-1 text-xs">
-              <Link href="/dashboard/manage-products">
+              <Link href="/dashboard/manage-product">
                 View All <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </Button>

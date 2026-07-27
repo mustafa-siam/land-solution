@@ -2,24 +2,8 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { toast } from "sonner";
 import {
   MoreHorizontal,
   Loader2,
@@ -31,6 +15,24 @@ import {
 } from "lucide-react";
 
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -41,16 +43,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-// Import Shadcn UI Select Components
 import {
   Select,
   SelectContent,
@@ -63,8 +55,9 @@ import GlobalDelete from "@/components/layout/dashboard/shared/DeleteGlobal/Glob
 import TrashGlobal from "@/components/layout/dashboard/shared/TrashGlobal/TrashGlobal";
 import GlobalHeaderSection from "@/components/layout/dashboard/shared/GlobalHeaderSection/GlobalHeaderSection";
 import { GlobalPagination } from "@/components/layout/dashboard/shared/GlobalPagination/GlobalPagination";
-import { IData } from "../type";
-import Link from "next/link";
+import GlobalImagePreview from "@/components/layout/dashboard/shared/GlobalImagePreview/GlobalImagePreview";
+import { GlobalDescriptionModal } from "@/components/layout/dashboard/shared/GlobalDescriptionModal/GlobalDescriptionModal";
+
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
@@ -73,93 +66,21 @@ import {
   useUpdateProductTrashStatusMutation,
   useUpdateProductVerificationStatusMutation,
 } from "@/redux/features/product/productApi";
-import GlobalImagePreview from "@/components/layout/dashboard/shared/GlobalImagePreview/GlobalImagePreview";
+import { IData } from "./type";
 
-import { toast } from "sonner";
-
-// Component for previewing full product details in a modal
-function ProductPreviewModal({ item }: { item: IData }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-8 gap-1.5 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/50"
-        >
-          <Eye className="h-3.5 w-3.5" />
-          <span>Preview</span>
-        </Button>
-      </DialogTrigger>
-
-      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto p-6 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl">
-        <DialogHeader className="border-b dark:border-slate-800 pb-3 mb-4">
-          <DialogTitle className="text-lg font-bold flex items-center justify-between">
-            <span className="truncate pr-4">{item.title}</span>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 uppercase">
-              {item.status || "Pending"}
-            </span>
-          </DialogTitle>
-        </DialogHeader>
-
-        {/* Detailed View Modal Body */}
-        <div className="space-y-6">
-          {/* Main Info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-slate-800/50 p-4 rounded-lg">
-            <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Price</p>
-              <p className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">
-                {item.price ? `৳ ${item.price}` : "N/A"}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Location</p>
-              <p className="text-sm font-medium">{item.location || "N/A"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Phone</p>
-              <p className="text-sm font-medium">{item.phone || "N/A"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Status & Badges</p>
-              <div className="flex items-center gap-2 mt-1">
-                {item.verification && (
-                  <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded font-medium">
-                    Verified
-                  </span>
-                )}
-                {item.recommendation && (
-                  <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 px-2 py-0.5 rounded font-medium">
-                    Recommended
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Description HTML / Text Content */}
-          <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Description
-            </h4>
-            <div
-              className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed bg-slate-50 dark:bg-slate-800/30 p-4 rounded-lg border border-gray-100 dark:border-slate-800"
-              dangerouslySetInnerHTML={{
-                __html: item.description || "<p>No description provided.</p>",
-              }}
-            />
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
+interface ProductManagementTableProps {
+  title: string;
+  createBy: "admin" | "user";
+  description?: string;
 }
 
-export default function ManagePage() {
-  const createBy = "user";
+export default function ProductManagementTable({
+  title,
+  createBy,
+  description = "View, edit, and manage all products in the system",
+}: ProductManagementTableProps) {
   const getFor = "admin";
+
   const [filters, setFilters] = useState({
     page: 1,
     limit: 10,
@@ -218,7 +139,7 @@ export default function ManagePage() {
   const handleInlineStatusChange = async (id: string, newStatus: string) => {
     try {
       await updateStatus({ id, status: newStatus }).unwrap();
-      toast.success("Publication status updated successfully!");
+      toast.success("Successfully updated publication status!");
     } catch (error: any) {
       toast.error(
         error?.data?.payload?.message ||
@@ -228,14 +149,10 @@ export default function ManagePage() {
     }
   };
 
-  const handleUpdateRecommendationFunction = async (
-    id: string,
-    recommendation: boolean
-  ) => {
+  const handleUpdateRecommendationFunction = async (id: string, recommendation: boolean) => {
     try {
-      const data = { id, recommendation: !recommendation };
-      await updateRecommendation(data).unwrap();
-      toast.success("Successfully updated verification status!");
+      await updateRecommendation({ id, recommendation: !recommendation }).unwrap();
+      toast.success("Successfully updated recommendation status!");
     } catch (error: any) {
       toast.error(
         error?.data?.payload?.message ||
@@ -245,13 +162,9 @@ export default function ManagePage() {
     }
   };
 
-  const handleUpdateVerificationFunction = async (
-    id: string,
-    verification: boolean
-  ) => {
+  const handleUpdateVerificationFunction = async (id: string, verification: boolean) => {
     try {
-      const data = { id, verification: !verification };
-      await updateVerification(data).unwrap();
+      await updateVerification({ id, verification: !verification }).unwrap();
       toast.success("Successfully updated verification status!");
     } catch (error: any) {
       toast.error(
@@ -279,10 +192,7 @@ export default function ManagePage() {
     if (diffDays === 0) return `Today ${time}`;
     if (diffDays === 1) return `Yesterday ${time}`;
     if (diffDays < 7) return `${diffDays}d ago`;
-    return `${date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    })} ${time}`;
+    return `${date.toLocaleDateString("en-US", { month: "short", day: "numeric" })} ${time}`;
   }, []);
 
   if (isLoading) {
@@ -296,8 +206,8 @@ export default function ManagePage() {
   return (
     <div className="space-y-6">
       <GlobalHeaderSection
-        name="Manage User Product"
-        description="View, edit, and manage all products in the system"
+        name={title}
+        description={description}
         meta={meta}
         usersCount={allData.length}
         filters={filters}
@@ -313,9 +223,7 @@ export default function ManagePage() {
               <TableRow>
                 <TableHead className="w-12">
                   <Checkbox
-                    checked={
-                      selectedUsers.size === allData.length && allData.length > 0
-                    }
+                    checked={selectedUsers.size === allData.length && allData.length > 0}
                     onCheckedChange={toggleSelectAll}
                   />
                 </TableHead>
@@ -325,7 +233,8 @@ export default function ManagePage() {
                 <TableHead>Phone</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead>Location</TableHead>
-                <TableHead>Preview</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Terms And Conditions</TableHead>
                 <TableHead>Verification</TableHead>
                 <TableHead>Recommendation</TableHead>
                 <TableHead>Video</TableHead>
@@ -353,36 +262,28 @@ export default function ManagePage() {
                     <TableCell>
                       <GlobalImagePreview title={item?.title} images={item.image} />
                     </TableCell>
-                    <TableCell className="font-medium max-w-[200px] truncate">
+                    <TableCell className="font-medium max-w-[180px] truncate">
                       {item.title}
                     </TableCell>
 
-                    {/* Inline Dropdown Status Cell */}
+                    {/* Inline Status Selection */}
                     <TableCell>
                       <Select
                         defaultValue={item.status || "pending"}
                         disabled={isUpdatingStatus}
-                        onValueChange={(value) =>
-                          handleInlineStatusChange(item._id, value)
-                        }
+                        onValueChange={(value) => handleInlineStatusChange(item._id, value)}
                       >
                         <SelectTrigger className="w-[130px] h-9 bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-700">
-                          <SelectValue placeholder="Select Status" />
+                          <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                         <SelectContent className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700">
-                          <SelectItem
-                            value="pending"
-                            className="cursor-pointer focus:bg-gray-100 dark:focus:bg-slate-800"
-                          >
+                          <SelectItem value="pending" className="cursor-pointer">
                             <span className="inline-flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-medium text-xs uppercase">
                               <span className="h-2 w-2 rounded-full bg-amber-500" />
                               Pending
                             </span>
                           </SelectItem>
-                          <SelectItem
-                            value="published"
-                            className="cursor-pointer focus:bg-gray-100 dark:focus:bg-slate-800"
-                          >
+                          <SelectItem value="published" className="cursor-pointer">
                             <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium text-xs uppercase">
                               <span className="h-2 w-2 rounded-full bg-emerald-500" />
                               Published
@@ -395,38 +296,40 @@ export default function ManagePage() {
                     <TableCell>{item.phone}</TableCell>
                     <TableCell>{item.price}</TableCell>
                     <TableCell>{item.location}</TableCell>
-                    
-                    {/* Updated Preview Column using ProductPreviewModal */}
                     <TableCell>
-                      <ProductPreviewModal item={item} />
+                      <GlobalDescriptionModal title={item?.title} description={item?.description} />
+                    </TableCell>
+                    <TableCell>
+                      <GlobalDescriptionModal
+                        title="Terms And Conditions"
+                        description={item?.termsAndConditions}
+                      />
                     </TableCell>
 
+                    {/* Verification Action */}
                     <TableCell className="uppercase">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button
-                            className={`cursor-pointer flex w-full h-full px-2 py-1.5 ${
+                            className={`cursor-pointer flex items-center w-full px-2 py-1.5 font-medium text-xs rounded border transition-all ${
                               item?.verification
-                                ? "text-orange-600 dark:text-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30"
-                                : "text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30"
+                                ? "text-orange-600 border-orange-200 bg-orange-50/50 hover:bg-orange-100 dark:text-orange-400 dark:border-orange-900/50 dark:bg-orange-950/20"
+                                : "text-green-600 border-green-200 bg-green-50/50 hover:bg-green-100 dark:text-green-400 dark:border-green-900/50 dark:bg-green-950/20"
                             }`}
                           >
                             {item?.verification ? (
-                              <ShieldOff className="mr-2 mt-1 h-4 w-4" />
+                              <ShieldOff className="mr-1.5 h-3.5 w-3.5" />
                             ) : (
-                              <ShieldCheck className="mr-2 mt-1 h-4 w-4" />
+                              <ShieldCheck className="mr-1.5 h-3.5 w-3.5" />
                             )}
-                            {item?.verification
-                              ? "Remove Verification"
-                              : "Verify Item"}
+                            {item?.verification ? "Verified" : "Verify"}
                           </button>
                         </AlertDialogTrigger>
+
                         <AlertDialogContent className="dark:bg-slate-900 dark:text-gray-100">
                           <AlertDialogHeader>
                             <AlertDialogTitle className="text-lg font-semibold">
-                              {item?.verification
-                                ? "Revoke verification?"
-                                : "Verify this item?"}
+                              {item?.verification ? "Revoke verification?" : "Verify this item?"}
                             </AlertDialogTitle>
                             <AlertDialogDescription className="text-sm text-gray-600 dark:text-gray-400">
                               {item?.verification
@@ -445,10 +348,7 @@ export default function ManagePage() {
                                   : "bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
                               }`}
                               onClick={() =>
-                                handleUpdateVerificationFunction(
-                                  item?._id,
-                                  item?.verification
-                                )
+                                handleUpdateVerificationFunction(item?._id, item?.verification)
                               }
                               disabled={isUpdatingVerification}
                             >
@@ -463,32 +363,30 @@ export default function ManagePage() {
                       </AlertDialog>
                     </TableCell>
 
+                    {/* Recommendation Action */}
                     <TableCell className="uppercase">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button
-                            className={`cursor-pointer flex w-full h-full px-2 py-1.5 ${
+                            className={`cursor-pointer flex items-center w-full px-2 py-1.5 font-medium text-xs rounded border transition-all ${
                               item?.recommendation
-                                ? "text-orange-600 dark:text-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30"
-                                : "text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30"
+                                ? "text-orange-600 border-orange-200 bg-orange-50/50 hover:bg-orange-100 dark:text-orange-400 dark:border-orange-900/50 dark:bg-orange-950/20"
+                                : "text-green-600 border-green-200 bg-green-50/50 hover:bg-green-100 dark:text-green-400 dark:border-green-900/50 dark:bg-green-950/20"
                             }`}
                           >
                             {item?.recommendation ? (
-                              <ShieldOff className="mr-2 mt-1 h-4 w-4" />
+                              <ShieldOff className="mr-1.5 h-3.5 w-3.5" />
                             ) : (
-                              <ShieldCheck className="mr-2 mt-1 h-4 w-4" />
+                              <ShieldCheck className="mr-1.5 h-3.5 w-3.5" />
                             )}
-                            {item?.recommendation
-                              ? "Remove Recommendation"
-                              : "Recommend Item"}
+                            {item?.recommendation ? "Recommended" : "Recommend"}
                           </button>
                         </AlertDialogTrigger>
+
                         <AlertDialogContent className="dark:bg-slate-900 dark:text-gray-100">
                           <AlertDialogHeader>
                             <AlertDialogTitle className="text-lg font-semibold">
-                              {item?.recommendation
-                                ? "Remove recommendation?"
-                                : "Recommend this item?"}
+                              {item?.recommendation ? "Remove recommendation?" : "Recommend this item?"}
                             </AlertDialogTitle>
                             <AlertDialogDescription className="text-sm text-gray-600 dark:text-gray-400">
                               {item?.recommendation
@@ -507,10 +405,7 @@ export default function ManagePage() {
                                   : "bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
                               }`}
                               onClick={() =>
-                                handleUpdateRecommendationFunction(
-                                  item?._id,
-                                  item?.recommendation
-                                )
+                                handleUpdateRecommendationFunction(item?._id, item?.recommendation)
                               }
                               disabled={isUpdatingRecommendation}
                             >
@@ -526,21 +421,18 @@ export default function ManagePage() {
                     </TableCell>
 
                     <TableCell>
-                      {item.video ? (
-                        <Link
-                          href={item.video}
-                          className="flex text-blue-600 gap-1 items-center hover:underline"
-                          target="_blank"
-                        >
-                          <Eye size={16} /> View
-                        </Link>
-                      ) : (
-                        <span className="text-gray-400 text-xs">None</span>
-                      )}
+                      <Link
+                        href={item.video || "#"}
+                        className="flex text-blue-600 gap-1 items-center hover:underline"
+                        target="_blank"
+                      >
+                        <Eye size={16} /> View
+                      </Link>
                     </TableCell>
                     <TableCell className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
                       {formatDate(item.createdAt)}
                     </TableCell>
+
                     <TableCell className="text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -551,21 +443,19 @@ export default function ManagePage() {
 
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          {filters?.isTrash || (
-                            <>
-                              <DropdownMenuItem className="cursor-pointer" asChild>
-                                <Link
-                                  href={`/dashboard/update-product/${item.slug}`}
-                                  className="text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/30 flex w-full h-full px-2 py-1.5"
-                                >
-                                  <UserCog className="mr-2 mt-1 h-4 w-4 text-blue-600 dark:text-blue-400" />
-                                  <span>Edit</span>
-                                </Link>
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                            </>
+                          {!filters?.isTrash && (
+                            <DropdownMenuItem className="cursor-pointer" asChild>
+                              <Link
+                                href={`/dashboard/update-product/${item.slug}`}
+                                className="text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/30 flex w-full h-full px-2 py-1.5 items-center"
+                              >
+                                <UserCog className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
+                                <span>Edit</span>
+                              </Link>
+                            </DropdownMenuItem>
                           )}
 
+                          <DropdownMenuSeparator />
                           <TrashGlobal
                             filters={filters}
                             handleUpdateTrash={updateTrash}

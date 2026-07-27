@@ -16,10 +16,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MoreHorizontal, Loader2, User2, UserCog, Eye, ShieldOff, ShieldCheck } from "lucide-react";
+import {
+  MoreHorizontal,
+  Loader2,
+  User2,
+  UserCog,
+  Eye,
+  ShieldOff,
+  ShieldCheck,
+} from "lucide-react";
 
 import {
   AlertDialog,
@@ -33,7 +42,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-// Shadcn / Radix Select Components
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+// Import Shadcn UI Select Components
 import {
   Select,
   SelectContent,
@@ -47,13 +64,98 @@ import TrashGlobal from "@/components/layout/dashboard/shared/TrashGlobal/TrashG
 import GlobalHeaderSection from "@/components/layout/dashboard/shared/GlobalHeaderSection/GlobalHeaderSection";
 import { GlobalPagination } from "@/components/layout/dashboard/shared/GlobalPagination/GlobalPagination";
 import { IData } from "../type";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
-import { useDeleteProductMutation, useGetAllProductsQuery, useUpdateProductRecommendationStatusMutation, useUpdateProductStatusMutation, useUpdateProductTrashStatusMutation, useUpdateProductVerificationStatusMutation } from "@/redux/features/product/productApi";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+  useUpdateProductRecommendationStatusMutation,
+  useUpdateProductStatusMutation,
+  useUpdateProductTrashStatusMutation,
+  useUpdateProductVerificationStatusMutation,
+} from "@/redux/features/product/productApi";
 import GlobalImagePreview from "@/components/layout/dashboard/shared/GlobalImagePreview/GlobalImagePreview";
-import { GlobalDescriptionModal } from "@/components/layout/dashboard/shared/GlobalDescriptionModal/GlobalDescriptionModal";
 
 import { toast } from "sonner";
+
+// Component for previewing full product details in a modal
+function ProductPreviewModal({ item }: { item: IData }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 gap-1.5 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/50"
+        >
+          <Eye className="h-3.5 w-3.5" />
+          <span>Preview</span>
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto p-6 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl">
+        <DialogHeader className="border-b dark:border-slate-800 pb-3 mb-4">
+          <DialogTitle className="text-lg font-bold flex items-center justify-between">
+            <span className="truncate pr-4">{item.title}</span>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 uppercase">
+              {item.status || "Pending"}
+            </span>
+          </DialogTitle>
+        </DialogHeader>
+
+        {/* Detailed View Modal Body */}
+        <div className="space-y-6">
+          {/* Main Info */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 dark:bg-slate-800/50 p-4 rounded-lg">
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Price</p>
+              <p className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">
+                {item.price ? `৳ ${item.price}` : "N/A"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Location</p>
+              <p className="text-sm font-medium">{item.location || "N/A"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Phone</p>
+              <p className="text-sm font-medium">{item.phone || "N/A"}</p>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Status & Badges</p>
+              <div className="flex items-center gap-2 mt-1">
+                {item.verification && (
+                  <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded font-medium">
+                    Verified
+                  </span>
+                )}
+                {item.recommendation && (
+                  <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 px-2 py-0.5 rounded font-medium">
+                    Recommended
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Description HTML / Text Content */}
+          <div className="space-y-2">
+            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Description
+            </h4>
+            <div
+              className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed bg-slate-50 dark:bg-slate-800/30 p-4 rounded-lg border border-gray-100 dark:border-slate-800"
+              dangerouslySetInnerHTML={{
+                __html: item.description || "<p>No description provided.</p>",
+              }}
+            />
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function ManagePage() {
   const createBy = "admin";
@@ -67,28 +169,41 @@ export default function ManagePage() {
     statusProperty: ["all", "pending", "published"],
     isTrash: false,
     createBy,
-    getFor
+    getFor,
   });
 
   const queryParams = useMemo(() => {
     const { page, limit, search, status, isTrash, createBy, getFor } = filters;
-    return { page, limit, createBy, getFor, ...(search && { search }), ...(status && { status }), ...(isTrash && { isTrash }) };
+    return {
+      page,
+      limit,
+      createBy,
+      getFor,
+      ...(search && { search }),
+      ...(status && { status }),
+      ...(isTrash && { isTrash }),
+    };
   }, [filters]);
 
   const { data, isLoading, isError, isFetching } = useGetAllProductsQuery(queryParams);
   const [deleteMethod, { isLoading: isDeleting }] = useDeleteProductMutation();
   const [updateTrash, { isLoading: isUpdatingTrash }] = useUpdateProductTrashStatusMutation();
   const [updateStatus] = useUpdateProductStatusMutation();
-  const [updateVerification, { isLoading: isUpdatingVerification }] = useUpdateProductVerificationStatusMutation();
-  const [updateRecommendation, { isLoading: isUpdatingRecommendation }] = useUpdateProductRecommendationStatusMutation();
+  const [updateVerification, { isLoading: isUpdatingVerification }] =
+    useUpdateProductVerificationStatusMutation();
+  const [updateRecommendation, { isLoading: isUpdatingRecommendation }] =
+    useUpdateProductRecommendationStatusMutation();
 
   const allData: IData[] = useMemo(() => data?.data?.data || [], [data]);
-  const meta = useMemo(() => data?.data?.meta || { page: 1, limit: 10, total: 0, totalPages: 0 }, [data]);
+  const meta = useMemo(
+    () => data?.data?.meta || { page: 1, limit: 10, total: 0, totalPages: 0 },
+    [data]
+  );
 
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
 
   const toggleUserSelection = useCallback((id: string) => {
-    setSelectedUsers(prev => {
+    setSelectedUsers((prev) => {
       const updated = new Set(prev);
       updated.has(id) ? updated.delete(id) : updated.add(id);
       return updated;
@@ -96,7 +211,9 @@ export default function ManagePage() {
   }, []);
 
   const toggleSelectAll = useCallback(() => {
-    setSelectedUsers(prev => prev.size === allData.length ? new Set() : new Set(allData.map((u: any) => u._id)));
+    setSelectedUsers((prev) =>
+      prev.size === allData.length ? new Set() : new Set(allData.map((u: any) => u._id))
+    );
   }, [allData]);
 
   const handleInlineStatusChange = async (id: string, newStatus: string) => {
@@ -106,13 +223,16 @@ export default function ManagePage() {
     } catch (error: any) {
       toast.error(
         error?.data?.payload?.message ||
-        error?.data?.message ||
-        "Something went wrong"
+          error?.data?.message ||
+          "Something went wrong"
       );
     }
   };
 
-  const handleUpdateRecommendationFunction = async (id: string, recommendation: boolean) => {
+  const handleUpdateRecommendationFunction = async (
+    id: string,
+    recommendation: boolean
+  ) => {
     try {
       const data = { id, recommendation: !recommendation };
       await updateRecommendation(data).unwrap();
@@ -120,13 +240,16 @@ export default function ManagePage() {
     } catch (error: any) {
       toast.error(
         error?.data?.payload?.message ||
-        error?.data?.message ||
-        "Something went wrong"
+          error?.data?.message ||
+          "Something went wrong"
       );
     }
   };
 
-  const handleUpdateVerificationFunction = async (id: string, verification: boolean) => {
+  const handleUpdateVerificationFunction = async (
+    id: string,
+    verification: boolean
+  ) => {
     try {
       const data = { id, verification: !verification };
       await updateVerification(data).unwrap();
@@ -134,8 +257,8 @@ export default function ManagePage() {
     } catch (error: any) {
       toast.error(
         error?.data?.payload?.message ||
-        error?.data?.message ||
-        "Something went wrong"
+          error?.data?.message ||
+          "Something went wrong"
       );
     }
   };
@@ -146,14 +269,21 @@ export default function ManagePage() {
     const diffMinutes = Math.floor((now.getTime() - date.getTime()) / 60000);
     const diffHours = Math.floor(diffMinutes / 60);
     const diffDays = Math.floor(diffHours / 24);
-    const time = date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+    const time = date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
 
     if (diffMinutes < 60) return `${diffMinutes} min ago`;
     if (diffHours < 24) return `${diffHours}h ago`;
     if (diffDays === 0) return `Today ${time}`;
     if (diffDays === 1) return `Yesterday ${time}`;
     if (diffDays < 7) return `${diffDays}d ago`;
-    return `${date.toLocaleDateString("en-US", { month: "short", day: "numeric" })} ${time}`;
+    return `${date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    })} ${time}`;
   }, []);
 
   if (isLoading) {
@@ -184,7 +314,9 @@ export default function ManagePage() {
               <TableRow>
                 <TableHead className="w-12">
                   <Checkbox
-                    checked={selectedUsers.size === allData.length && allData.length > 0}
+                    checked={
+                      selectedUsers.size === allData.length && allData.length > 0
+                    }
                     onCheckedChange={toggleSelectAll}
                   />
                 </TableHead>
@@ -194,8 +326,7 @@ export default function ManagePage() {
                 <TableHead>Phone</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead>Location</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Terms And Conditions</TableHead>
+                <TableHead>Preview</TableHead>
                 <TableHead>Verification</TableHead>
                 <TableHead>Recommendation</TableHead>
                 <TableHead>Video</TableHead>
@@ -207,12 +338,12 @@ export default function ManagePage() {
             <TableBody>
               {isFetching && !isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={14} className="text-center py-10">
+                  <TableCell colSpan={13} className="text-center py-10">
                     <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mx-auto" />
                   </TableCell>
                 </TableRow>
               ) : allData?.length > 0 && !isError ? (
-                allData?.map(item => (
+                allData?.map((item) => (
                   <TableRow key={item._id}>
                     <TableCell>
                       <Checkbox
@@ -220,9 +351,13 @@ export default function ManagePage() {
                         onCheckedChange={() => toggleUserSelection(item._id)}
                       />
                     </TableCell>
-                    <TableCell><GlobalImagePreview title={item?.title} images={item.image} /></TableCell>
-                    <TableCell className="font-medium max-w-[180px] truncate">{item.title}</TableCell>
-                    
+                    <TableCell>
+                      <GlobalImagePreview title={item?.title} images={item.image} />
+                    </TableCell>
+                    <TableCell className="font-medium max-w-[180px] truncate">
+                      {item.title}
+                    </TableCell>
+
                     {/* Inline Status Selection Column */}
                     <TableCell>
                       <Select
@@ -252,9 +387,12 @@ export default function ManagePage() {
                     <TableCell>{item.phone}</TableCell>
                     <TableCell>{item.price}</TableCell>
                     <TableCell>{item.location}</TableCell>
-                    <TableCell><GlobalDescriptionModal title={item?.title} description={item?.description} /></TableCell>
-                    <TableCell><GlobalDescriptionModal title="Terms And Conditions" description={item?.termsAndConditions} /></TableCell>
                     
+                    {/* Render Product Preview Modal */}
+                    <TableCell>
+                      <ProductPreviewModal item={item} />
+                    </TableCell>
+
                     <TableCell className="uppercase">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
@@ -295,10 +433,16 @@ export default function ManagePage() {
                                   ? "bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-600"
                                   : "bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
                               }`}
-                              onClick={() => handleUpdateVerificationFunction(item?._id, item?.verification)}
+                              onClick={() =>
+                                handleUpdateVerificationFunction(item?._id, item?.verification)
+                              }
                               disabled={isUpdatingVerification}
                             >
-                              {isUpdatingVerification ? "Processing..." : item?.verification ? "Revoke" : "Verify"}
+                              {isUpdatingVerification
+                                ? "Processing..."
+                                : item?.verification
+                                ? "Revoke"
+                                : "Verify"}
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -345,25 +489,35 @@ export default function ManagePage() {
                                   ? "bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-600"
                                   : "bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
                               }`}
-                              onClick={() => handleUpdateRecommendationFunction(item?._id, item?.recommendation)}
+                              onClick={() =>
+                                handleUpdateRecommendationFunction(item?._id, item?.recommendation)
+                              }
                               disabled={isUpdatingRecommendation}
                             >
-                              {isUpdatingRecommendation ? "Processing..." : item?.recommendation ? "Remove" : "Recommend"}
+                              {isUpdatingRecommendation
+                                ? "Processing..."
+                                : item?.recommendation
+                                ? "Remove"
+                                : "Recommend"}
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
                     </TableCell>
-                    
+
                     <TableCell>
-                      <Link href={item.video || "#"} className="flex text-blue-600 gap-1 items-center hover:underline" target="_blank">
+                      <Link
+                        href={item.video || "#"}
+                        className="flex text-blue-600 gap-1 items-center hover:underline"
+                        target="_blank"
+                      >
                         <Eye size={16} />View
                       </Link>
                     </TableCell>
                     <TableCell className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
                       {formatDate(item.createdAt)}
                     </TableCell>
-                    
+
                     <TableCell className="text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -413,7 +567,7 @@ export default function ManagePage() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={14} className="text-center py-12">
+                  <TableCell colSpan={13} className="text-center py-12">
                     <User2 className="h-12 w-12 text-gray-400 mx-auto mb-2" />
                     <p>No data found</p>
                   </TableCell>
@@ -428,7 +582,7 @@ export default function ManagePage() {
             page={filters.page}
             totalPages={meta.totalPages}
             isFetching={isFetching}
-            onPageChange={page => setFilters(prev => ({ ...prev, page }))}
+            onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
           />
         )}
       </div>

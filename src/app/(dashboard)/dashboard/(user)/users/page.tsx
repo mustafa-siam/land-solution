@@ -542,7 +542,7 @@ export default function UsersPage() {
               variant="outline"
               size="icon"
               onClick={clearFilters}
-              className="shrink-0"
+              className="shrink-0 text-red-600"
             >
               <X className="h-4 w-4" />
             </Button>

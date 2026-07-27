@@ -2,245 +2,91 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // 1. Import useRouter
-import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Constants } from "./constant";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Search as SearchIcon } from "lucide-react";
 
-interface SearchProps {
-  categories: any[];
-}
+export default function Search() {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState<"buy" | "rent" | "all">("buy");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-export default function Search({ categories }: SearchProps) {
-  const router = useRouter(); // 2. Initialize router
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Filters state
-  const [filters, setFilters] = useState<any>({
-    minPrice: undefined,
-    maxPrice: undefined,
-    categoryId: "",
-    verification: "",
-    recommendation: "",
-    condition: "",
-    bedrooms: "",
-    bathrooms: "",
-    balcony: "",
-    drawingSpace: "",
-    diningRoom: "",
-    kitchen: "",
-    parking: "",
-    gas: "",
-    facing: "",
-    electricity: "",
-    water: "",
-    collegeUniversity: "",
-    hospitalClinic: "",
-    mosque: "",
-    supermarketGrocery: "",
-    bankATM: "",
-    busMetroStation: "",
-    propertyType: "",
-    search: "",
-    status: "published",
-    isTrash: false,
-  });
-
-  // Handle input/select changes
-  const handleChange = (key: string, value: any) => {
-    setFilters((prev: any) => ({ ...prev, [key]: value }));
-  };
-
-  // Reset all filters
-  const handleReset = () => {
-    setFilters({
-      minPrice: undefined,
-      maxPrice: undefined,
-      categoryId: "",
-      verification: "",
-      recommendation: "",
-      condition: "",
-      bedrooms: "",
-      bathrooms: "",
-      balcony: "",
-      drawingSpace: "",
-      diningRoom: "",
-      kitchen: "",
-      parking: "",
-      gas: "",
-      facing: "",
-      electricity: "",
-      water: "",
-      collegeUniversity: "",
-      hospitalClinic: "",
-      mosque: "",
-      supermarketGrocery: "",
-      bankATM: "",
-      busMetroStation: "",
-      propertyType: "",
-      search: "",
-      status: "published",
-      isTrash: false,
-    });
-  };
-
-  // 3. Updated Search Logic
   const handleSearch = () => {
     const params = new URLSearchParams();
 
-    // Loop through every field in the filters object
-    Object.entries(filters).forEach(([key, value]) => {
-      // Only add to URL if value is not empty, null, or undefined
-      if (value !== "" && value !== undefined && value !== null) {
-        params.set(key, value.toString());
-      }
-    });
+    // Add search term if available
+    if (searchTerm.trim()) {
+      params.set("search", searchTerm.trim());
+    }
 
-    // Redirect to /properties with the full query string
+    // Pass tab intent as propertyType or listingType filter (adjust parameter name based on backend requirements)
+    if (activeTab !== "all") {
+      params.set("propertyType", activeTab);
+    }
+
+    // Default active listing criteria
+    params.set("status", "published");
+
     router.push(`/properties?${params.toString()}`);
   };
 
-  const renderSelect = (label: string, key: string, options: Record<string, string>) => (
-    <div className="flex flex-col space-y-1">
-      <label className="text-dark-slate flex items-center gap-2 text-sm font-medium">{label}</label>
-      <select
-        value={filters[key] || ""}
-        onChange={(e) => handleChange(key, e.target.value)}
-        className="w-full p-2 rounded bg-[#F5F5F5] border border-gray-300 focus:outline-ruby-wine transition"
-      >
-        <option value="">All</option>
-        {Object.entries(options).map(([_, value]) => (
-          <option key={value} value={value}>
-            {value.charAt(0).toUpperCase() + value.slice(1)}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-
   return (
-    <div className="bg-white max-w-5xl mx-auto p-5 lg:px-10 relative z-20 shadow-xl rounded-lg space-y-5">
-      {/* Categories */}
-      <div className="flex flex-wrap gap-2 items-center">
-        <button
-          onClick={() => handleChange("categoryId", "")}
-          className={`px-3 py-1 hover:opacity-90 transition cursor-pointer rounded-full border border-[#333333] ${
-            filters.categoryId === "" ? "bg-[#333333] text-white" : ""
+    <div className="w-full max-w-2xl mx-auto shadow-2xl rounded-md overflow-hidden bg-white">
+      {/* Search Type Tabs (Buy / Rent / All) */}
+      <div className="flex bg-gray-100/80 border-b border-gray-200">
+      <button
+          type="button"
+          onClick={() => setActiveTab("all")}
+          className={`px-6 py-3.5 cursor-pointer text-sm font-semibold transition-colors duration-150 ${
+            activeTab === "all"
+              ? "bg-white text-black border-t-2 border-black"
+              : "text-gray-600 hover:text-black"
           }`}
         >
           All
         </button>
-        {categories?.map((item) => (
-          <button
-            key={item._id}
-            onClick={() => handleChange("categoryId", item._id)}
-            className={`px-3 py-1 hover:opacity-90 transition cursor-pointer rounded-full border border-[#333333] ${
-              filters.categoryId === item._id ? "bg-[#333333] text-white" : ""
-            }`}
-          >
-            {item.title}
-          </button>
-        ))}
-        <p
-          className="flex items-center gap-2 ml-auto text-ruby-wine font-medium text-lg cursor-pointer select-none"
-          onClick={() => setIsOpen(!isOpen)}
+        <button
+          type="button"
+          onClick={() => setActiveTab("buy")}
+          className={`px-6 py-3.5 text-sm cursor-pointer font-semibold transition-colors duration-150 ${
+            activeTab === "buy"
+              ? "bg-white text-black border-t-2 border-black"
+              : "text-gray-600 hover:text-black"
+          }`}
         >
-          Advanced
-          {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </p>
+          Buy
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("rent")}
+          className={`px-6 py-3.5 text-sm cursor-pointer font-semibold transition-colors duration-150 ${
+            activeTab === "rent"
+              ? "bg-white text-black border-t-2 border-black"
+              : "text-gray-600 hover:text-black"
+          }`}
+        >
+          Rent
+        </button>
       </div>
 
-      {/* Main Search Bar */}
-      <div className="flex flex-col sm:flex-row gap-5">
+      {/* Main Search Input & Icon Button */}
+      <div className="flex items-center p-2 bg-white">
         <Input
-          placeholder="Search by keyword"
-          className="bg-[#F5F5F5]"
-          value={filters.search || ""}
-          onChange={(e) => handleChange("search", e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Search on Enter
+          type="text"
+          placeholder="City, Neighborhood, Address..."
+          className="border-none shadow-none text-base focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 h-12 px-4"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
-        <div className="flex flex-wrap sm:flex-nowrap gap-5">
-          <Button
-            className="bg-ruby-wine text-white px-6 py-2 rounded hover:opacity-90 transition cursor-pointer"
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
-          <Button
-            className="bg-gray-200 text-dark-slate hover:bg-gray-300"
-            onClick={handleReset}
-          >
-            Reset Filters
-          </Button>
-        </div>
-      </div>
-
-      {/* Advanced Filters Panel */}
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0 invisible"
-        }`}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-5 pt-5 border-t">
-          {renderSelect("Property Type", "propertyType", Constants.PropertyType)}
-          {renderSelect("Gas", "gas", Constants.Gas)}
-          {renderSelect("Facing", "facing", Constants.Facing)}
-          {renderSelect("Electricity", "electricity", Constants.ElectricityType)}
-          {renderSelect("Water", "water", Constants.WaterSource)}
-          {renderSelect("Verification", "verification", { true: "Verified", false: "Not Verified" })}
-          {renderSelect("Recommendation", "recommendation", { true: "Recommended", false: "Normal" })}
-        {renderSelect("Drawing Space", "drawingSpace", { "YES": "YES", "NO": "NO" })}
-        {renderSelect("Dining Room", "diningRoom", { "YES": "YES", "NO": "NO" })}
-        {renderSelect("Kitchen", "kitchen", { "YES": "YES", "NO": "NO" })}
-        {renderSelect("Parking", "parking", { "YES": "YES", "NO": "NO" })}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Input
-            placeholder="Min Price"
-            type="number"
-            value={filters.minPrice || ""}
-            onChange={(e) => handleChange("minPrice", e.target.value)}
-          />
-          <Input
-            placeholder="Max Price"
-            type="number"
-            value={filters.maxPrice || ""}
-            onChange={(e) => handleChange("maxPrice", e.target.value)}
-          />
-          <Input
-            placeholder="Bedrooms"
-            value={filters.bedrooms || ""}
-            onChange={(e) => handleChange("bedrooms", e.target.value)}
-          />
-          <Input
-            placeholder="Bathrooms"
-            value={filters.bathrooms || ""}
-            onChange={(e) => handleChange("bathrooms", e.target.value)}
-          />
-          <Input
-            placeholder="Balcony"
-            value={filters.balcony || ""}
-            onChange={(e) => handleChange("balcony", e.target.value)}
-          />
-          {/* Proximity/Infrastructure fields */}
-          <Input
-            placeholder="College/University"
-            value={filters.collegeUniversity || ""}
-            onChange={(e) => handleChange("collegeUniversity", e.target.value)}
-          />
-          <Input
-            placeholder="Hospital/Clinic"
-            value={filters.hospitalClinic || ""}
-            onChange={(e) => handleChange("hospitalClinic", e.target.value)}
-          />
-          <Input
-            placeholder="Bus/Metro Station"
-            value={filters.busMetroStation || ""}
-            onChange={(e) => handleChange("busMetroStation", e.target.value)}
-          />
-        </div>
+        <button
+          type="button"
+          onClick={handleSearch}
+          aria-label="Search"
+          className="bg-black hover:bg-neutral-800 cursor-pointer text-white h-12 w-12 flex items-center justify-center rounded shrink-0 transition-colors"
+        >
+          <SearchIcon size={20} />
+        </button>
       </div>
     </div>
   );
