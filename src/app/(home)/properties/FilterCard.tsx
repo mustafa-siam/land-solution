@@ -11,15 +11,16 @@ import { useRouter } from "next/navigation";
 import { useGetAllAreasQuery } from "@/redux/features/area/areaApi";
 
 const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => {
-  const { data } = useGetAllCategoriesQuery({ page: 1, limit: 100, search: "",status: "published", isTrash: false });
+  const { data } = useGetAllCategoriesQuery({ page: 1, limit: 100, search: "", status: "published", isTrash: false });
   const categories: any[] = data?.data?.data || [];
-    const { data:area } = useGetAllAreasQuery({ page: 1, limit: 100, search: "",status: "published", isTrash: false });
-    const areas: any[] = area?.data?.data || [];
+  const { data: area } = useGetAllAreasQuery({ page: 1, limit: 100, search: "", status: "published", isTrash: false });
+  const areas: any[] = area?.data?.data || [];
 
-  const router = useRouter()
+  const router = useRouter();
 
   // Default filter values
   const defaultFilters = {
+    purpose: "", // 👈 ADDED
     minPrice: undefined,
     maxPrice: undefined,
     categoryId: "",
@@ -58,15 +59,15 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
   };
 
   const handleReset = () => {
-  // 1. Reset the local state to initial/default values
-  setFilters(defaultFilters);
+    // 1. Reset the local state to initial/default values
+    setFilters(defaultFilters);
 
-  // 2. Clear the URL by navigating to the path without parameters
-  router.push("/properties");
+    // 2. Clear the URL by navigating to the path without parameters
+    router.push("/properties");
 
-  // 3. Manually trigger a refetch of the data
-  refetch();
-};
+    // 3. Manually trigger a refetch of the data
+    refetch();
+  };
 
   const renderInput = (label: string, key: string, type: string = "text") => (
     <div className="space-y-2">
@@ -88,9 +89,9 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
         onChange={(e) => handleChange(key, e.target.value)}
         className="w-full border border-gray-300 rounded p-2 cursor-pointer"
       >
-        <option  value="">All</option>
+        <option value="">All</option>
         {Object.entries(options).map(([_, value]) => (
-          <option  key={value} value={value}>
+          <option key={value} value={value}>
             {value.charAt(0).toUpperCase() + value.slice(1)}
           </option>
         ))}
@@ -98,11 +99,9 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
     </div>
   );
 
-  console.log({filters})
+  console.log({ filters });
   return (
     <div className={`w-80 space-y-5 h-fit hidden sm:block`}>
-     
-
       {/* Category */}
       <div className="bg-white space-y-5 rounded">
         <h1 className="flex justify-between items-center gap-5 text-forest-green text-xl font-medium">
@@ -114,9 +113,9 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
           onChange={(e) => handleChange("categoryId", e.target.value)}
           className="w-full border border-gray-300 rounded p-2"
         >
-          <option  value="">All</option>
+          <option value="">All</option>
           {categories.map((category) => (
-            <option  key={category._id} value={category._id}>
+            <option key={category._id} value={category._id}>
               {category.title}
             </option>
           ))}
@@ -132,9 +131,9 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
           onChange={(e) => handleChange("areaId", e.target.value)}
           className="w-full border border-gray-300 rounded p-2"
         >
-          <option  value="">All</option>
+          <option value="">All</option>
           {areas.map((area) => (
-            <option  key={area._id} value={area._id}>
+            <option key={area._id} value={area._id}>
               {area.title}
             </option>
           ))}
@@ -179,7 +178,7 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
         </h1>
         <div className="w-full h-px bg-[#C4C4C4]" />
         {renderSelect("Verification", "verification", { "true": "Verified", "false": "Not Verified" })}
-{renderSelect("Recommendation", "recommendation", { "true": "Recommended", "false": "General" })}
+        {renderSelect("Recommendation", "recommendation", { "true": "Recommended", "false": "General" })}
       </div>
 
       {/* Other text fields */}
@@ -204,7 +203,7 @@ const FilterCard: React.FC<any> = ({ isOpen, filters, setFilters, refetch }) => 
         {renderInput("Bus/Metro Station", "busMetroStation")}
       </div>
 
-       {/* Reset Button */}
+      {/* Reset Button */}
       <div className="flex justify-center">
         <button
           onClick={handleReset}

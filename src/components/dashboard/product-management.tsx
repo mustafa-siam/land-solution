@@ -66,7 +66,6 @@ import {
   useUpdateProductTrashStatusMutation,
   useUpdateProductVerificationStatusMutation,
 } from "@/redux/features/product/productApi";
-import { IData } from "./type";
 
 interface ProductManagementTableProps {
   title: string;

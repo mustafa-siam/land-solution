@@ -4,88 +4,93 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Search as SearchIcon } from "lucide-react";
+import { Search as SearchIcon, MapPin } from "lucide-react";
 
-export default function Search() {
+export default function Search({ categories }: { categories?: any[] }) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"buy" | "rent" | "all">("buy");
+  const [activeTab, setActiveTab] = useState<"buy" | "rent" | "all">("all"); // 👈 fixed default
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleSearch = () => {
     const params = new URLSearchParams();
 
-    // Add search term if available
     if (searchTerm.trim()) {
       params.set("search", searchTerm.trim());
     }
 
-    // Pass tab intent as propertyType or listingType filter (adjust parameter name based on backend requirements)
     if (activeTab !== "all") {
-      params.set("propertyType", activeTab);
+      params.set("purpose", activeTab.toUpperCase());
     }
 
-    // Default active listing criteria
     params.set("status", "published");
 
     router.push(`/properties?${params.toString()}`);
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto shadow-2xl rounded-md overflow-hidden bg-white">
+    <div className="w-full max-w-2xl mx-auto shadow-2xl rounded-2xl overflow-hidden bg-white/95 backdrop-blur-md border border-white/30 transition-all duration-300">
+      
       {/* Search Type Tabs (Buy / Rent / All) */}
-      <div className="flex bg-gray-100/80 border-b border-gray-200">
-      <button
+      <div className="flex bg-gray-100/90 border-b border-gray-200/80 p-1.5 gap-1">
+        <button
           type="button"
           onClick={() => setActiveTab("all")}
-          className={`px-6 py-3.5 cursor-pointer text-sm font-semibold transition-colors duration-150 ${
+          className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${
             activeTab === "all"
-              ? "bg-white text-black border-t-2 border-black"
-              : "text-gray-600 hover:text-black"
+              ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
+              : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
           }`}
         >
-          All
+          All Listings
         </button>
+
         <button
           type="button"
           onClick={() => setActiveTab("buy")}
-          className={`px-6 py-3.5 text-sm cursor-pointer font-semibold transition-colors duration-150 ${
+          className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${
             activeTab === "buy"
-              ? "bg-white text-black border-t-2 border-black"
-              : "text-gray-600 hover:text-black"
+              ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
+              : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
           }`}
         >
-          Buy
+          Buy Property
         </button>
+
         <button
           type="button"
           onClick={() => setActiveTab("rent")}
-          className={`px-6 py-3.5 text-sm cursor-pointer font-semibold transition-colors duration-150 ${
+          className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${
             activeTab === "rent"
-              ? "bg-white text-black border-t-2 border-black"
-              : "text-gray-600 hover:text-black"
+              ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
+              : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
           }`}
         >
-          Rent
+          Rent Property
         </button>
       </div>
 
-      {/* Main Search Input & Icon Button */}
-      <div className="flex items-center p-2 bg-white">
-        <Input
-          type="text"
-          placeholder="City, Neighborhood, Address..."
-          className="border-none shadow-none text-base focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 h-12 px-4"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        />
+      {/* Main Search Input & Action Button */}
+      <div className="flex items-center p-2.5 bg-white gap-2">
+        <div className="flex items-center flex-1 px-3 bg-gray-50/80 rounded-xl border border-gray-200/60 focus-within:border-[#800020] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#800020]/10 transition-all">
+          <MapPin className="w-5 h-5 text-[#800020] shrink-0 mr-2" />
+          <Input
+            type="text"
+            placeholder="Search by City, Neighborhood, Address..."
+            className="border-none bg-transparent shadow-none text-sm sm:text-base focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400 h-12 px-0 text-gray-900"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+        </div>
+
         <button
           type="button"
           onClick={handleSearch}
           aria-label="Search"
-          className="bg-black hover:bg-neutral-800 cursor-pointer text-white h-12 w-12 flex items-center justify-center rounded shrink-0 transition-colors"
+          className="bg-[#800020] hover:bg-[#600018] cursor-pointer text-white h-12 px-6 flex items-center justify-center gap-2 rounded-xl shrink-0 transition-all duration-200 font-semibold shadow-md active:scale-95"
         >
-          <SearchIcon size={20} />
+          <SearchIcon size={18} />
+          <span className="hidden sm:inline text-sm">Search</span>
         </button>
       </div>
     </div>

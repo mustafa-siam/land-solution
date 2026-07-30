@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiMenu, FiX } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { Heart } from "lucide-react";
 
 const Navbar: React.FC = () => {
@@ -27,10 +27,11 @@ const Navbar: React.FC = () => {
     : "sticky top-0 left-0 w-full z-50 bg-white text-gray-900 border-b border-gray-100 shadow-sm";
 
   const textColorClass = isHome ? "text-white" : "text-gray-900";
-  const textMutedClass = isHome ? "text-white/80" : "text-gray-600";
+  const textMutedClass = isHome ? "text-white/80 hover:text-white" : "text-gray-600 hover:text-[#800020]";
+  
   const activeLinkClass = isHome
-    ? "text-white underline underline-offset-8 decoration-2"
-    : "text-black font-semibold underline underline-offset-8 decoration-2";
+    ? "text-white font-semibold underline underline-offset-8 decoration-[#800020] decoration-2"
+    : "text-[#800020] font-semibold underline underline-offset-8 decoration-[#800020] decoration-2";
 
   useEffect(() => {
     const fetchUserRole = async () => {
@@ -135,7 +136,7 @@ const Navbar: React.FC = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition hover:opacity-80 ${
+                className={`text-sm font-medium transition-colors ${
                   isActive(link.href) ? activeLinkClass : textMutedClass
                 }`}
               >
@@ -146,7 +147,7 @@ const Navbar: React.FC = () => {
             {shouldShowAdminDashboard && (
               <Link
                 href="/dashboard"
-                className={`text-sm font-medium transition hover:opacity-80 ${
+                className={`text-sm font-medium transition-colors ${
                   isActive("/dashboard") ? activeLinkClass : textMutedClass
                 }`}
               >
@@ -157,7 +158,7 @@ const Navbar: React.FC = () => {
             {shouldShowUserDashboard && (
               <Link
                 href="/user-dashboard"
-                className={`text-sm font-medium transition hover:opacity-80 ${
+                className={`text-sm font-medium transition-colors ${
                   isActive("/user-dashboard") ? activeLinkClass : textMutedClass
                 }`}
               >
@@ -170,32 +171,43 @@ const Navbar: React.FC = () => {
           <div className="hidden lg:flex items-center gap-5">
             <Link
               href="/saved"
-              className={`${textColorClass} hover:opacity-80 transition`}
+              className={`${textColorClass} hover:text-[#800020] transition-colors`}
+              aria-label="Saved Items"
             >
               <Heart size={20} />
             </Link>
 
-            {needLogin && (
+            {needLogin ? (
               <span className={`text-sm font-medium ${textColorClass}`}>
-                <Link href="/sign-in" className="hover:underline">
+                <Link href="/sign-in" className="hover:text-[#800020] transition-colors">
                   Sign In
                 </Link>
                 <span className="mx-1.5 opacity-60">/</span>
-                <Link href="/sign-up" className="hover:underline">
+                <Link href="/sign-up" className="hover:text-[#800020] transition-colors">
                   Sign Up
                 </Link>
               </span>
+            ) : (
+              <div className="flex items-center gap-3">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             )}
           </div>
 
           {/* Mobile Toggle */}
           <div className="lg:hidden flex items-center gap-4 relative z-50">
-            <Link href="/saved" className={textColorClass}>
+            <Link href="/saved" className={`${textColorClass} hover:text-[#800020] transition-colors`}>
               <Heart size={20} />
             </Link>
+            
+            {!needLogin && (
+              <UserButton afterSignOutUrl="/" />
+            )}
+
             <button
               onClick={toggleMobileMenu}
               className={`text-2xl ${textColorClass} focus:outline-none`}
+              aria-label="Toggle Navigation Menu"
             >
               {isMobileMenuOpen ? <FiX /> : <FiMenu />}
             </button>
@@ -205,7 +217,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`absolute top-full left-0 w-full bg-white shadow-md z-40 border-t border-gray-100 ${
+        className={`absolute top-full left-0 w-full bg-white shadow-lg z-40 border-t border-gray-100 ${
           isMobileMenuOpen
             ? "translate-y-0 opacity-100 pointer-events-auto"
             : "-translate-y-2 opacity-0 pointer-events-none"
@@ -217,8 +229,10 @@ const Navbar: React.FC = () => {
               key={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
               href={link.href}
-              className={`hover:underline text-sm font-medium ${
-                isActive(link.href) ? "text-black font-semibold" : "text-gray-600"
+              className={`text-sm font-medium transition-colors ${
+                isActive(link.href)
+                  ? "text-[#800020] font-semibold"
+                  : "text-gray-600 hover:text-[#800020]"
               }`}
             >
               {link.label}
@@ -229,8 +243,10 @@ const Navbar: React.FC = () => {
             <Link
               onClick={() => setIsMobileMenuOpen(false)}
               href="/dashboard"
-              className={`hover:underline text-sm font-medium ${
-                isActive("/dashboard") ? "text-black font-semibold" : "text-gray-600"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/dashboard")
+                  ? "text-[#800020] font-semibold"
+                  : "text-gray-600 hover:text-[#800020]"
               }`}
             >
               Dashboard
@@ -241,8 +257,10 @@ const Navbar: React.FC = () => {
             <Link
               onClick={() => setIsMobileMenuOpen(false)}
               href="/user-dashboard"
-              className={`hover:underline text-sm font-medium ${
-                isActive("/user-dashboard") ? "text-black font-semibold" : "text-gray-600"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/user-dashboard")
+                  ? "text-[#800020] font-semibold"
+                  : "text-gray-600 hover:text-[#800020]"
               }`}
             >
               Dashboard
@@ -250,18 +268,19 @@ const Navbar: React.FC = () => {
           )}
 
           {needLogin && (
-            <div className="flex gap-4 pt-2 border-t border-gray-100 text-sm font-medium">
+            <div className="flex gap-4 pt-3 border-t border-gray-100 text-sm font-medium">
               <Link
                 onClick={() => setIsMobileMenuOpen(false)}
                 href="/sign-in"
-                className="text-gray-800 hover:underline"
+                className="text-gray-800 hover:text-[#800020] transition-colors"
               >
                 Sign In
               </Link>
+              <span className="text-gray-300">|</span>
               <Link
                 onClick={() => setIsMobileMenuOpen(false)}
                 href="/sign-up"
-                className="text-gray-800 hover:underline"
+                className="text-[#800020] font-medium hover:underline"
               >
                 Sign Up
               </Link>

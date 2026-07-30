@@ -1,144 +1,221 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import React from "react";
-import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { 
+  FaFacebookF, 
+  FaInstagram, 
+  FaLinkedinIn 
+} from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  ArrowUpRight, 
+  Send 
+} from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#121212] text-white font-sans" id="footer">
+    <footer className="bg-[#0f0f11] text-gray-300 font-sans border-t border-gray-800/60" id="footer">
       
-      {/* Top Section matching screenshot structure */}
-      <div className="py-24 px-6 text-center border-b border-gray-800/80">
-        <div className="max-w-3xl mx-auto space-y-5">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-            Are you want to Property Owner?
-          </h2>
-          <p className="text-gray-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-            Let us know your requirement to receive curated, high-value property options.
-          </p>
+      {/* Top Banner / Call To Action */}
+      <div className="border-b border-gray-800/80 bg-gradient-to-r from-[#141417] via-[#0f0f11] to-[#141417]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-1 text-center md:text-left">
+            <h3 className="text-xl sm:text-2xl font-bold text-white">
+              Ready to find your next property?
+            </h3>
+            <p className="text-gray-400 text-xs sm:text-sm">
+              Connect with our estate experts to explore off-market listings across Bangladesh.
+            </p>
+          </div>
           
-          <div className="pt-4 flex justify-center">
-            <Button 
-              asChild 
-              className="bg-ruby-wine text-white hover:text-black hover:bg-gray-200 font-semibold text-xs sm:text-sm px-8 py-6 rounded-none uppercase tracking-wider transition-all"
-            >
-              <Link href="/contact">
-                Contact With Us
-              </Link>
-            </Button>
+          <div className="flex items-center gap-3 shrink-0">
+            <Link href="/contact">
+              <Button className="bg-[#800020] hover:bg-[#66001a] text-white px-6 py-2.5 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-2">
+                <span>Contact With Us</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Links & Branding Layout */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+      {/* Main Footer Links & Information */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           
-          {/* Brand Column */}
-          <div className="md:col-span-5 space-y-4">
-            <h3 className="text-xl font-bold uppercase tracking-wider text-white">
-              Land Solution
-            </h3>
-            <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
-              Connecting buyers, sellers, and renters with premium real estate properties across Bangladesh with architectural precision.
+          {/* Column 1: Brand & Bio (Span 4) */}
+          <div className="lg:col-span-4 space-y-5">
+            <div className="space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#800020]">
+                Real Estate Partner
+              </span>
+              <h3 className="text-2xl font-bold tracking-tight text-white uppercase">
+                Land Solution
+              </h3>
+            </div>
+            
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+              Connecting buyers, sellers, and renters with premium residential and commercial properties across Bangladesh with architectural precision.
             </p>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pt-4">
-              <Link href="#" className="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all">
-                <FaFacebookF size={12} />
-              </Link>
-              <Link href="#" className="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all">
-                <FaInstagram size={12} />
-              </Link>
-              <Link href="#" className="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all">
-                <RiTwitterXFill size={12} />
-              </Link>
+            {/* Social Media Links */}
+            <div className="pt-2">
+              <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">
+                Follow Our Journey
+              </p>
+              <div className="flex items-center gap-2.5">
+                {[
+                  { icon: FaFacebookF, href: "#" },
+                  { icon: FaInstagram, href: "#" },
+                  { icon: RiTwitterXFill, href: "#" },
+                  { icon: FaLinkedinIn, href: "#" },
+                ].map((social, idx) => {
+                  const Icon = social.icon;
+                  return (
+                    <Link
+                      key={idx}
+                      href={social.href}
+                      className="w-9 h-9 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#800020] hover:bg-[#800020]/10 transition-all duration-300"
+                    >
+                      <Icon size={14} />
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Company Column */}
-          <div className="md:col-span-2 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Company
+          {/* Column 2: Navigation Links (Span 2) */}
+          <div className="lg:col-span-2 space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
+              Quick Links
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
-              <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/properties" className="hover:text-white transition-colors">
-                  Properties
-                </Link>
-              </li>
-              <li>
-                <Link href="/testimonials" className="hover:text-white transition-colors">
-                  Testimonials
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
+            <ul className="space-y-2.5 text-xs">
+              {[
+                { name: "About Us", href: "/about" },
+                { name: "Our Properties", href: "/properties" },
+                { name: "Testimonials", href: "/testimonials" },
+                { name: "Blog & Insights", href: "/blogs" },
+                { name: "Contact Us", href: "/contact" },
+              ].map((item, idx) => (
+                <li key={idx}>
+                  <Link 
+                    href={item.href} 
+                    className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Explore Column */}
-          <div className="md:col-span-2 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Explore
+          {/* Column 3: Property Categories (Span 2) */}
+          <div className="lg:col-span-2 space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
+              Categories
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
-              <li>
-                <Link href="/blogs" className="hover:text-white transition-colors">
-                  Blogs
-                </Link>
-              </li>
-              <li>
-                <p className="text-gray-400">+1 800-525-54-589</p>
-              </li>
-              <li>
-                <p className="text-gray-400">info@wdesignkit.com</p>
-              </li>
+            <ul className="space-y-2.5 text-xs">
+              {[
+                { name: "Buy Property", href: "/properties?type=buy" },
+                { name: "Sell Property", href: "/contact?intent=sell" },
+                { name: "Rent Homes", href: "/properties?type=rent" },
+                { name: "Commercial Space", href: "/properties?type=commercial" },
+                { name: "Luxury Staging", href: "/about#staging" },
+              ].map((item, idx) => (
+                <li key={idx}>
+                  <Link 
+                    href={item.href} 
+                    className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Legal Column */}
-          <div className="md:col-span-3 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Legal
+          {/* Column 4: Get in Touch & Newsletter (Span 4) */}
+          <div className="lg:col-span-4 space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
+              Newsletter
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Legal Disclaimers
-                </Link>
-              </li>
-            </ul>
+            
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Subscribe to get exclusive off-market listing updates directly to your inbox.
+            </p>
+
+            {/* Form */}
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
+              <div className="relative flex items-center">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="w-full bg-gray-900/90 border border-gray-800 text-xs text-white placeholder-gray-500 rounded-lg px-3.5 py-3 pr-10 focus:outline-none focus:border-[#800020] transition-colors"
+                />
+                <button
+                  type="submit"
+                  aria-label="Subscribe"
+                  className="absolute right-1.5 p-2 bg-[#800020] text-white rounded-md hover:bg-[#66001a] transition-colors"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </form>
+
+            {/* Direct Contact Info */}
+            <div className="pt-2 space-y-2 text-xs text-gray-400">
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-3.5 h-3.5 text-[#800020]" />
+                <span>+1 800-525-54-589</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-3.5 h-3.5 text-[#800020]" />
+                <span>info@wdesignkit.com</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <MapPin className="w-3.5 h-3.5 text-[#800020]" />
+                <span>Dhaka, Bangladesh</span>
+              </div>
+            </div>
+
           </div>
 
         </div>
 
+        {/* Legal Links Bar */}
+        <div className="mt-12 pt-6 border-t border-gray-800/60 flex flex-wrap justify-between items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="hover:text-gray-300 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-gray-300 transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/disclaimer" className="hover:text-gray-300 transition-colors">
+              Legal Disclaimers
+            </Link>
+          </div>
+
+          <p className="text-gray-500 text-[11px]">
+            Licensed Real Estate Agency in Bangladesh
+          </p>
+        </div>
+
         {/* Footer Bottom Metadata */}
-        <div className="pt-12 mt-12 border-t border-gray-800/80 text-xs text-gray-500 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>© {new Date().getFullYear()} Al Qibla. All rights reserved.</p>
-          <p>
-            Design & Develop By{" "}
-            <Link href="https://www.qrinux.com/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors font-medium">
+        <div className="mt-6 pt-6 border-t border-gray-800/40 text-xs text-gray-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p>© {new Date().getFullYear()} Land Solution. All rights reserved.</p>
+          <p className="flex items-center gap-1">
+            <span>Design & Developed by</span>
+            <Link 
+              href="https://www.qrinux.com/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-300 hover:text-white font-medium underline underline-offset-4 decoration-gray-700 hover:decoration-white transition-all"
+            >
               Qrinux Inc
             </Link>
           </p>

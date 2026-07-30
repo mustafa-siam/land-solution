@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Jost, Yanone_Kaffeesatz } from "next/font/google";
+import { Outfit, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -7,36 +7,34 @@ import ClerkAuthProvider from "@/components/providers/ClerkAuthProvider";
 import ReduxWrapper from "@/redux/ReduxWrapper";
 import { Toaster } from "@/components/ui/sonner";
 
-// Modern, clean, professional font - Used by Vercel, GitHub, Stripe anirban
-const jost = Jost({
-  subsets: ['latin'],
-  // Use 'variable' to load all weights (100-900) in one optimized file
-  // or you can specify a range like '100 900' or an array of weights.
-  // We'll use the 'variable' option for best performance.
-  variable: '--font-jost', // Define a CSS variable
-  display: 'swap',
+// Modern architectural heading font
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-outfit",
+  display: "swap",
 });
 
-// Define Yanone Kaffeesatz
-const yanoneKaffeesatz = Yanone_Kaffeesatz({
-  subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600', '700'], // Available weights
-  display: 'swap',
-  variable: '--font-yanone-kaffeesatz' // Optional: Define a CSS variable for utility classes
+// Clean, highly legible body font
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-dm-sans",
+  display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: {
     default: "Land Solution",
     template: "%s | Land Solution",
   },
-  description: "Land Solution — tours, travel packages and pilgrimages",
+  description: "Land Solution — Real estate, properties, buy, sell and rent",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   openGraph: {
     title: "Land Solution",
-    description: "Land Solution — tours, travel packages and pilgrimages",
+    description: "Land Solution — Real estate, properties, buy, sell and rent",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
     siteName: "Land Solution",
     images: [
@@ -53,7 +51,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Land Solution",
-    description: "Land Solution — tours, travel packages and pilgrimages",
+    description: "Land Solution — Real estate, properties, buy, sell and rent",
     site: process.env.NEXT_PUBLIC_TWITTER_HANDLE ?? undefined,
   },
   icons: {
@@ -83,10 +81,8 @@ export default function RootLayout({
     <ReduxWrapper>
       <ClerkProvider>
         <ClerkAuthProvider>
-          <html lang="en" suppressHydrationWarning>
-            <body
-              className={`${jost.className} ${yanoneKaffeesatz.variable} font-sans antialiased`}
-            >
+          <html lang="en" suppressHydrationWarning className={`${outfit.variable} ${dmSans.variable}`}>
+            <body className="font-sans antialiased text-gray-900 dark:text-gray-100">
               <ThemeProvider
                 attribute="class"
                 defaultTheme="light"

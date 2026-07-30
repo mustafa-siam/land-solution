@@ -1,4 +1,6 @@
+import { FAQ } from '@/components/layout/Home/About/FAQ/FAQ'
 import Banner from '@/components/layout/Home/Home/Banner/Banner'
+
 import FindNeighborhood from '@/components/layout/Home/Home/neighbourhood/neighborhood'
 import OurCategory from '@/components/layout/Home/Home/OurCategory/OurCategory'
 import OurClientReviews from '@/components/layout/Home/Home/OurClientReviews/OurClientReviews'
@@ -27,6 +29,7 @@ export default function page() {
         </div> */}
       </div>
       <OurClientReviews/>
+      <FAQ></FAQ>
     </div>
   )
 }

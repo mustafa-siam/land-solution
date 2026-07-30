@@ -7,7 +7,7 @@ import {
   Hospital, Bus, 
   Warehouse, Store, CheckCircle, 
   Building, Camera, Video, ShieldCheck,
-  UtensilsCrossed
+  UtensilsCrossed, X, ChevronLeft, ChevronRight
 } from "lucide-react";
 import Image from "next/image";
 import { Key, useEffect, useState } from "react";
@@ -49,6 +49,8 @@ const ProductDetailsSkeleton = () => (
 
 export default function ProductDetails({ product, isLoading }: { product: any, isLoading?: boolean }) {
   const [isSaved, setIsSaved] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Check if product is saved in localStorage on mount
   useEffect(() => {
@@ -92,9 +94,37 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
   if (isLoading) return <ProductDetailsSkeleton />;
 
-  // Image Fallbacks
-  const mainImage = product?.image?.[0] || "/images/placeholder.jpg";
-  const galleryImages = product?.image?.slice(1, 3) || [];
+  // Image Fallbacks & Array extraction
+  const allImages = product?.image?.length > 0 ? product.image : ["/images/placeholder.jpg"];
+  const mainImage = allImages[0];
+  const galleryImages = allImages.slice(1, 3);
+
+  // Helper to convert standard youtube watch urls to embed format
+  const getEmbedUrl = (url: string) => {
+    if (!url) return "";
+    try {
+      if (url.includes("embed/")) return url;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return match && match[2].length === 11 
+        ? `https://www.youtube.com/embed/${match[2]}` 
+        : url;
+    } catch {
+      return url;
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((prev) => (prev === 0 ? allImages.length - 1 : (prev as number) - 1));
+    }
+  };
+
+  const handleNextImage = () => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((prev) => ((prev as number) === allImages.length - 1 ? 0 : (prev as number) + 1));
+    }
+  };
 
   return (
     <div className="w-full overflow-x-hidden font-sans text-gray-800  px-6 ">
@@ -145,41 +175,58 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
         {/* GALLERY GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-[300px] sm:h-[420px] lg:h-[480px]">
           {/* Main Image */}
-          <div className="lg:col-span-2 relative rounded-lg overflow-hidden bg-gray-100 group">
+          <div 
+            onClick={() => setLightboxIndex(0)}
+            className="lg:col-span-2 relative rounded-lg overflow-hidden bg-gray-100 group cursor-pointer"
+          >
             <Image
               src={mainImage}
               alt={product?.title || "Main Property Image"}
               fill
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               priority
             />
             {/* Gallery Overlay Badges */}
-            <div className="absolute bottom-4 left-4 flex gap-2">
-              <button className="flex items-center gap-1.5 bg-white/90 hover:bg-white backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition">
-                <Camera size={14} /> 18 Photos
+            <div className="absolute bottom-4 left-4 flex gap-2" onClick={(e) => e.stopPropagation()}>
+              <button 
+                onClick={() => setLightboxIndex(0)}
+                className="flex items-center gap-1.5 bg-white/90 hover:bg-white backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer"
+              >
+                <Camera size={14} /> {allImages.length} Photos
               </button>
-              <button className="flex items-center gap-1.5 bg-white/90 hover:bg-white backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition">
-                <Video size={14} /> Virtual Tour
-              </button>
+              {product?.video && (
+                <button 
+                  onClick={() => setIsVideoModalOpen(true)}
+                  className="flex items-center gap-1.5 bg-white/90 hover:bg-white backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer"
+                >
+                  <Video size={14} /> Virtual Tour
+                </button>
+              )}
             </div>
           </div>
 
           {/* Side Thumbnails */}
           <div className="hidden lg:grid grid-rows-2 gap-3 h-full">
-            <div className="relative rounded-lg overflow-hidden bg-gray-100">
+            <div 
+              onClick={() => setLightboxIndex(allImages.length > 1 ? 1 : 0)}
+              className="relative rounded-lg overflow-hidden bg-gray-100 group cursor-pointer"
+            >
               <Image
                 src={galleryImages[0] || mainImage}
                 alt="Property Preview 1"
                 fill
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               />
             </div>
-            <div className="relative rounded-lg overflow-hidden bg-gray-100">
+            <div 
+              onClick={() => setLightboxIndex(allImages.length > 2 ? 2 : 0)}
+              className="relative rounded-lg overflow-hidden bg-gray-100 group cursor-pointer"
+            >
               <Image
                 src={galleryImages[1] || mainImage}
                 alt="Property Preview 2"
                 fill
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               />
             </div>
           </div>
@@ -519,14 +566,14 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
         </div>
       </div>
 
-      {/* FULL-WIDTH STRATEGIC LOCATION SECTION (Extracted outside bounded grid) */}
+      {/* FULL-WIDTH STRATEGIC LOCATION SECTION */}
       <div className="w-full px-4  mb-12">
         <div className="max-w-7xl mx-auto px-4 mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Strategic Location</h2>
         </div>
 
         <div className="relative w-full border-y border-gray-200 bg-gray-100 h-[450px] sm:h-[500px]">
-          {/* Nearby Landmarks Card - Dynamic Centering & High Z-Index */}
+          {/* Nearby Landmarks Card */}
           <div className="absolute top-6 left-4 sm:left-6 lg:left-[calc(max(0px,(100vw-80rem)/2+1rem))] z-20 bg-white/95 backdrop-blur p-5 rounded-xl border border-gray-100 shadow-xl max-w-xs w-[calc(100%-2rem)] sm:w-full space-y-4">
             <h4 className="text-[10px] font-extrabold tracking-widest text-gray-400 uppercase">
               NEARBY LANDMARKS
@@ -589,7 +636,6 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
       {/* FOOTER SECTION DETAILS (Features & Terms) */}
       <div className="max-w-7xl mx-auto px-4  space-y-8">
-        {/* EXTRA FEATURES */}
         {product?.feature?.length > 0 && (
           <div>
             <h2 className="text-xl font-bold text-gray-900 mb-4">Extra Features</h2>
@@ -604,7 +650,6 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
           </div>
         )}
 
-        {/* TERMS AND CONDITIONS */}
         {product?.termsAndConditions && (
           <div>
             <h2 className="text-xl font-bold text-gray-900 mb-4">Terms and Conditions</h2>
@@ -615,6 +660,66 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
           </div>
         )}
       </div>
+
+      {/* VIRTUAL TOUR VIDEO MODAL */}
+      {isVideoModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden shadow-2xl aspect-video">
+            <button
+              onClick={() => setIsVideoModalOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition cursor-pointer"
+            >
+              <X size={20} />
+            </button>
+            <iframe
+              src={getEmbedUrl(product?.video)}
+              title="Virtual Tour Video"
+              className="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
+
+      {/* IMAGE LIGHTBOX MODAL */}
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
+          <button
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-6 right-6 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition cursor-pointer"
+          >
+            <X size={24} />
+          </button>
+
+          <button
+            onClick={handlePrevImage}
+            className="absolute left-4 md:left-8 z-10 p-3 bg-white/10 hover:bg-white/25 text-white rounded-full transition cursor-pointer"
+          >
+            <ChevronLeft size={28} />
+          </button>
+
+          <div className="relative w-full max-w-5xl h-[80vh] flex items-center justify-center">
+            <Image
+              src={allImages[lightboxIndex]}
+              alt={`Property image ${lightboxIndex + 1}`}
+              fill
+              className="object-contain"
+            />
+          </div>
+
+          <button
+            onClick={handleNextImage}
+            className="absolute right-4 md:right-8 z-10 p-3 bg-white/10 hover:bg-white/25 text-white rounded-full transition cursor-pointer"
+          >
+            <ChevronRight size={28} />
+          </button>
+
+          <div className="absolute bottom-6 bg-black/60 text-white text-xs font-semibold px-4 py-2 rounded-full">
+            {lightboxIndex + 1} / {allImages.length}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

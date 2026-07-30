@@ -5,6 +5,7 @@ import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
+import { Compass, ArrowUpRight, MapPin } from "lucide-react";
 
 interface Neighborhood {
   name: string;
@@ -42,18 +43,9 @@ export default function FindNeighborhood() {
       "Uttara",
     ];
 
-    /*
-     * Key   = unique area ID
-     * Value = neighborhood information
-     */
     const extractedMap = new Map<string, Neighborhood>();
 
     rawListings.forEach((item: any) => {
-      /*
-       * areaId can be:
-       * 1. An object: { _id, title }
-       * 2. A string containing the ID
-       */
       const areaId =
         typeof item?.areaId === "string"
           ? item.areaId
@@ -77,10 +69,6 @@ export default function FindNeighborhood() {
         item?.featuredImage ??
         "";
 
-      /*
-       * Only add valid API neighborhoods.
-       * Using areaId as the Map key prevents duplicate areas.
-       */
       if (areaId && primaryName && image && !extractedMap.has(areaId)) {
         extractedMap.set(areaId, {
           name: primaryName,
@@ -92,10 +80,6 @@ export default function FindNeighborhood() {
 
     const result = Array.from(extractedMap.values());
 
-    /*
-     * Add fallback cards when fewer than five real areas exist.
-     * Fallback cards are not clickable because areaId is empty.
-     */
     while (result.length < 5) {
       const index = result.length;
 
@@ -110,48 +94,67 @@ export default function FindNeighborhood() {
   }, [rawListings]);
 
   return (
-    <section className="bg-[#E7ECEF] px-[5%] py-16 font-sans text-gray-900">
-      <div className="mx-auto max-w-screen-xl">
-        <div className="mb-10 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+    <section className="bg-gradient-to-b from-gray-50 via-gray-100/70 to-gray-50 px-[5%] py-20 font-sans text-gray-900 border-t border-b border-gray-200/60 relative overflow-hidden">
+      
+      {/* Decorative Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl h-full pointer-events-none opacity-30">
+        <div className="absolute top-10 right-10 w-80 h-80 bg-[#800020]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="mx-auto max-w-screen-xl relative z-10 space-y-12">
+        
+        {/* Title Header */}
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#800020]/10 border border-[#800020]/20 text-[#800020] text-xs font-semibold uppercase tracking-wider">
+            <Compass className="w-3.5 h-3.5" />
+            <span>Explore Locations</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900">
             Find the Neighborhood For You
           </h2>
 
-          <p className="mt-2 text-xs text-gray-500 sm:text-sm">
-            The neighborhoods best suited to your lifestyle, and the agents
-            who know them best.
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+            The neighborhoods best suited to your lifestyle, and the local agents who know them best.
           </p>
         </div>
 
-        {isLoading && <NeighborhoodSkeleton />}
-
-        {!isLoading && (
+        {/* Dynamic Neighborhood Bento Grid */}
+        {isLoading ? (
+          <NeighborhoodSkeleton />
+        ) : (
           <div className="flex flex-col gap-4">
-            <div className="grid h-auto grid-cols-1 gap-4 md:h-[300px] md:grid-cols-12">
-              <div className="group relative h-[280px] overflow-hidden md:col-span-5 md:h-full">
+            
+            {/* Top Grid Row */}
+            <div className="grid h-auto grid-cols-1 gap-4 md:h-[320px] md:grid-cols-12">
+              <div className="h-[280px] md:col-span-5 md:h-full">
                 <NeighborhoodCard item={neighborhoods[0]} />
               </div>
 
-              <div className="group relative h-[280px] overflow-hidden md:col-span-3 md:h-full">
+              <div className="h-[280px] md:col-span-3 md:h-full">
                 <NeighborhoodCard item={neighborhoods[1]} />
               </div>
 
-              <div className="group relative h-[280px] overflow-hidden md:col-span-4 md:h-full">
+              <div className="h-[280px] md:col-span-4 md:h-full">
                 <NeighborhoodCard item={neighborhoods[2]} />
               </div>
             </div>
 
-            <div className="grid h-auto grid-cols-1 gap-4 md:h-[340px] md:grid-cols-12">
-              <div className="group relative h-[280px] overflow-hidden md:col-span-4 md:h-full">
+            {/* Bottom Grid Row */}
+            <div className="grid h-auto grid-cols-1 gap-4 md:h-[350px] md:grid-cols-12">
+              <div className="h-[280px] md:col-span-4 md:h-full">
                 <NeighborhoodCard item={neighborhoods[3]} />
               </div>
 
-              <div className="group relative h-[280px] overflow-hidden md:col-span-8 md:h-full">
+              <div className="h-[280px] md:col-span-8 md:h-full">
                 <NeighborhoodCard item={neighborhoods[4]} />
               </div>
             </div>
+
           </div>
         )}
+
       </div>
     </section>
   );
@@ -161,49 +164,51 @@ function NeighborhoodCard({ item }: { item: Neighborhood }) {
   const router = useRouter();
 
   const handleNeighborhoodClick = () => {
-    if (!item.areaId) {
-      return;
+    if (item.areaId) {
+      const params = new URLSearchParams({
+        areaId: item.areaId,
+      });
+      router.push(`/properties?${params.toString()}`);
+    } else {
+      router.push(`/properties`);
     }
-
-    const params = new URLSearchParams({
-      areaId: item.areaId,
-    });
-
-    router.push(`/properties?${params.toString()}`);
   };
-
-  const hasValidAreaId = Boolean(item.areaId);
 
   return (
     <button
       type="button"
       onClick={handleNeighborhoodClick}
-      disabled={!hasValidAreaId}
-      aria-label={
-        hasValidAreaId
-          ? `View properties in ${item.name}`
-          : `${item.name} properties are unavailable`
-      }
-      className={`group relative block h-full w-full overflow-hidden text-left ${hasValidAreaId
-        ? "cursor-pointer"
-        : "cursor-default"
-        }`}
+      aria-label={`View properties in ${item.name}`}
+      className="group relative h-full w-full overflow-hidden rounded-2xl border border-gray-200/80 bg-gray-900 shadow-sm transition-all duration-500 hover:shadow-xl hover:border-[#800020]/40 text-left cursor-pointer"
     >
+      {/* Background Image */}
       <Image
         src={item.image}
         alt={item.name}
         fill
         sizes="(max-width: 768px) 100vw, 50vw"
-        className={`object-cover transition-transform duration-500 ${hasValidAreaId ? "group-hover:scale-105" : ""
-          }`}
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      {/* Dark Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:from-black/90" />
 
-      <div className="absolute bottom-4 left-4">
-        <span className="text-sm font-semibold tracking-wide text-white underline decoration-white underline-offset-4 drop-shadow sm:text-base">
-          {item.name}
-        </span>
+
+      {/* Bottom Content Header */}
+      <div className="absolute bottom-5 left-5 right-5 z-10 flex items-end justify-between gap-3">
+        <div>
+          <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-sm group-hover:text-[#800020]  transition-colors">
+            {item.name}
+          </h3>
+          <p className="text-xs text-gray-300 font-normal mt-0.5 opacity-90">
+            Explore available listings
+          </p>
+        </div>
+
+        {/* Hover Icon Action Pill */}
+        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-[#800020] group-hover:border-[#800020] group-hover:scale-110 shadow-md">
+          <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </div>
       </div>
     </button>
   );
@@ -212,15 +217,15 @@ function NeighborhoodCard({ item }: { item: Neighborhood }) {
 function NeighborhoodSkeleton() {
   return (
     <div className="animate-pulse space-y-4">
-      <div className="grid h-auto grid-cols-1 gap-4 md:h-[300px] md:grid-cols-12">
-        <div className="h-[280px] bg-gray-200 md:col-span-5 md:h-full" />
-        <div className="h-[280px] bg-gray-200 md:col-span-3 md:h-full" />
-        <div className="h-[280px] bg-gray-200 md:col-span-4 md:h-full" />
+      <div className="grid h-auto grid-cols-1 gap-4 md:h-[320px] md:grid-cols-12">
+        <div className="h-[280px] bg-gray-200/80 rounded-2xl md:col-span-5 md:h-full" />
+        <div className="h-[280px] bg-gray-200/80 rounded-2xl md:col-span-3 md:h-full" />
+        <div className="h-[280px] bg-gray-200/80 rounded-2xl md:col-span-4 md:h-full" />
       </div>
 
-      <div className="grid h-auto grid-cols-1 gap-4 md:h-[340px] md:grid-cols-12">
-        <div className="h-[280px] bg-gray-200 md:col-span-4 md:h-full" />
-        <div className="h-[280px] bg-gray-200 md:col-span-8 md:h-full" />
+      <div className="grid h-auto grid-cols-1 gap-4 md:h-[350px] md:grid-cols-12">
+        <div className="h-[280px] bg-gray-200/80 rounded-2xl md:col-span-4 md:h-full" />
+        <div className="h-[280px] bg-gray-200/80 rounded-2xl md:col-span-8 md:h-full" />
       </div>
     </div>
   );
