@@ -494,13 +494,13 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
                 </div>
               </div>
               <Link href={"/contact"}>
-              <button className="w-full cursor-pointer bg-black hover:bg-gray-800 text-white text-xs font-bold py-3 px-4 rounded transition uppercase tracking-wider">
+              <button className="w-full cursor-pointer bg-gray-950 hover:bg-[#800020] text-white text-xs font-bold py-3 px-4 rounded transition uppercase tracking-wider rounded-xl">
                 Request Full Prospectus
               </button>
               </Link>
               
 
-              <div className="border border-gray-200 rounded-md py-2.5 px-3 text-center flex items-center justify-center gap-2 text-sm font-semibold text-gray-800">
+              <div className="border border-gray-200 rounded-xl mt-2 py-2.5 px-3 text-center flex items-center justify-center gap-2 text-sm font-semibold text-gray-800">
                 <Phone size={16} /> 
                 {product?.phone ? product.phone : "+880 1711-000000"}
               </div>
@@ -567,8 +567,8 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
       </div>
 
       {/* FULL-WIDTH STRATEGIC LOCATION SECTION */}
-      <div className="w-full px-4  mb-12">
-        <div className="max-w-7xl mx-auto px-4 mb-8">
+      <div className="w-full mb-12">
+        <div className=" my-8">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Strategic Location</h2>
         </div>
 
@@ -635,7 +635,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
       </div>
 
       {/* FOOTER SECTION DETAILS (Features & Terms) */}
-      <div className="max-w-7xl mx-auto px-4  space-y-8">
+      <div className="space-y-8">
         {product?.feature?.length > 0 && (
           <div>
             <h2 className="text-xl font-bold text-gray-900 mb-4">Extra Features</h2>

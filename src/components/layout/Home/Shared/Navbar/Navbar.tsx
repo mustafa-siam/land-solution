@@ -6,10 +6,11 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useAuth, UserButton } from "@clerk/nextjs";
-import { Heart } from "lucide-react";
+import { Heart, ChevronDown } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSubmenuOpen, setIsMobileSubmenuOpen] = useState(false);
   const pathname = usePathname();
   const { isLoaded, userId, getToken } = useAuth();
 
@@ -104,14 +105,18 @@ const Navbar: React.FC = () => {
   const shouldShowUserDashboard =
     isLoaded && userId && !isLoadingRole && isUser;
 
-  const navLinks = [
+  const primaryNavLinks = [
     { href: "/", label: "Home" },
     { href: "/properties", label: "Properties" },
+  ];
+
+  const submenuLinks = [
     { href: "/about", label: "About" },
     { href: "/blogs", label: "Blogs" },
     { href: "/testimonials", label: "Testimonials" },
-    { href: "/contact", label: "Contact" },
   ];
+
+  const isSubmenuActive = submenuLinks.some((link) => isActive(link.href));
 
   return (
     <nav className={navBgClass}>
@@ -130,13 +135,13 @@ const Navbar: React.FC = () => {
             />
           </Link>
 
-          {/* Desktop Links */}
+          {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {primaryNavLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-base md:text-lg font-medium transition-colors ${
                   isActive(link.href) ? activeLinkClass : textMutedClass
                 }`}
               >
@@ -144,10 +149,49 @@ const Navbar: React.FC = () => {
               </Link>
             ))}
 
+            {/* Desktop Submenu (Pages / More) */}
+            <div className="relative group py-2">
+              <button
+                type="button"
+                className={`flex items-center gap-1 text-base md:text-lg font-medium cursor-pointer transition-colors ${
+                  isSubmenuActive ? activeLinkClass : textMutedClass
+                }`}
+              >
+                <span>Company</span>
+                <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
+              </button>
+
+              {/* Submenu Dropdown */}
+              <div className="absolute top-full left-0 mt-1 w-48 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden p-2">
+                {submenuLinks.map((subLink) => (
+                  <Link
+                    key={subLink.href}
+                    href={subLink.href}
+                    className={`block px-4 py-2.5 rounded-lg text-base md:text-lg font-medium transition-all ${
+                      isActive(subLink.href)
+                        ? "bg-gray-100 text-[#800020] font-semibold"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-[#800020]"
+                    }`}
+                  >
+                    {subLink.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <Link
+              href="/contact"
+              className={`text-base md:text-lg font-medium transition-colors ${
+                isActive("/contact") ? activeLinkClass : textMutedClass
+              }`}
+            >
+              Contact
+            </Link>
+
             {shouldShowAdminDashboard && (
               <Link
                 href="/dashboard"
-                className={`text-sm font-medium transition-colors ${
+                className={`text-base md:text-lg font-medium transition-colors ${
                   isActive("/dashboard") ? activeLinkClass : textMutedClass
                 }`}
               >
@@ -158,7 +202,7 @@ const Navbar: React.FC = () => {
             {shouldShowUserDashboard && (
               <Link
                 href="/user-dashboard"
-                className={`text-sm font-medium transition-colors ${
+                className={`text-base md:text-lg font-medium transition-colors ${
                   isActive("/user-dashboard") ? activeLinkClass : textMutedClass
                 }`}
               >
@@ -168,21 +212,21 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right Side Actions */}
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden lg:flex items-center gap-6">
             <Link
               href="/saved"
               className={`${textColorClass} hover:text-[#800020] transition-colors`}
               aria-label="Saved Items"
             >
-              <Heart size={20} />
+              <Heart size={22} />
             </Link>
 
             {needLogin ? (
-              <span className={`text-sm font-medium ${textColorClass}`}>
+              <span className={`text-base md:text-lg font-medium ${textColorClass}`}>
                 <Link href="/sign-in" className="hover:text-[#800020] transition-colors">
                   Sign In
                 </Link>
-                <span className="mx-1.5 opacity-60">/</span>
+                <span className="mx-2 opacity-60">/</span>
                 <Link href="/sign-up" className="hover:text-[#800020] transition-colors">
                   Sign Up
                 </Link>
@@ -194,10 +238,10 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Toggle */}
+          {/* Mobile Toggle Controls */}
           <div className="lg:hidden flex items-center gap-4 relative z-50">
             <Link href="/saved" className={`${textColorClass} hover:text-[#800020] transition-colors`}>
-              <Heart size={20} />
+              <Heart size={22} />
             </Link>
             
             {!needLogin && (
@@ -224,29 +268,77 @@ const Navbar: React.FC = () => {
         } transition-all duration-300 ease-in-out lg:hidden`}
       >
         <div className="flex flex-col space-y-4 py-6 px-6 text-gray-800">
-          {navLinks.map((link) => (
+          {primaryNavLinks.map((link) => (
             <Link
               key={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
               href={link.href}
-              className={`text-sm font-medium transition-colors ${
+              className={`text-base md:text-lg font-medium transition-colors ${
                 isActive(link.href)
                   ? "text-[#800020] font-semibold"
-                  : "text-gray-600 hover:text-[#800020]"
+                  : "text-gray-700 hover:text-[#800020]"
               }`}
             >
               {link.label}
             </Link>
           ))}
 
+          {/* Mobile Submenu Accordion */}
+          <div className="flex flex-col space-y-2">
+            <button
+              type="button"
+              onClick={() => setIsMobileSubmenuOpen((prev) => !prev)}
+              className="flex items-center justify-between text-base md:text-lg font-medium text-gray-700 hover:text-[#800020]"
+            >
+              <span>Company</span>
+              <ChevronDown
+                size={18}
+                className={`transition-transform duration-200 ${
+                  isMobileSubmenuOpen ? "rotate-180 text-[#800020]" : ""
+                }`}
+              />
+            </button>
+
+            {isMobileSubmenuOpen && (
+              <div className="pl-4 flex flex-col space-y-3 pt-1 border-l-2 border-gray-200">
+                {submenuLinks.map((subLink) => (
+                  <Link
+                    key={subLink.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    href={subLink.href}
+                    className={`text-base font-medium transition-colors ${
+                      isActive(subLink.href)
+                        ? "text-[#800020] font-semibold"
+                        : "text-gray-600 hover:text-[#800020]"
+                    }`}
+                  >
+                    {subLink.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            onClick={() => setIsMobileMenuOpen(false)}
+            href="/contact"
+            className={`text-base md:text-lg font-medium transition-colors ${
+              isActive("/contact")
+                ? "text-[#800020] font-semibold"
+                : "text-gray-700 hover:text-[#800020]"
+            }`}
+          >
+            Contact
+          </Link>
+
           {shouldShowAdminDashboard && (
             <Link
               onClick={() => setIsMobileMenuOpen(false)}
               href="/dashboard"
-              className={`text-sm font-medium transition-colors ${
+              className={`text-base md:text-lg font-medium transition-colors ${
                 isActive("/dashboard")
                   ? "text-[#800020] font-semibold"
-                  : "text-gray-600 hover:text-[#800020]"
+                  : "text-gray-700 hover:text-[#800020]"
               }`}
             >
               Dashboard
@@ -257,10 +349,10 @@ const Navbar: React.FC = () => {
             <Link
               onClick={() => setIsMobileMenuOpen(false)}
               href="/user-dashboard"
-              className={`text-sm font-medium transition-colors ${
+              className={`text-base md:text-lg font-medium transition-colors ${
                 isActive("/user-dashboard")
                   ? "text-[#800020] font-semibold"
-                  : "text-gray-600 hover:text-[#800020]"
+                  : "text-gray-700 hover:text-[#800020]"
               }`}
             >
               Dashboard
@@ -268,7 +360,7 @@ const Navbar: React.FC = () => {
           )}
 
           {needLogin && (
-            <div className="flex gap-4 pt-3 border-t border-gray-100 text-sm font-medium">
+            <div className="flex gap-4 pt-3 border-t border-gray-100 text-base md:text-lg font-medium">
               <Link
                 onClick={() => setIsMobileMenuOpen(false)}
                 href="/sign-in"

@@ -48,20 +48,18 @@ export default function LandSolutionAbout() {
 
       <div className="max-w-screen-xl mx-auto relative z-10">
         
-        {/* Top Header Row */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#800020]/10 border border-[#800020]/20 text-[#800020] text-xs font-semibold uppercase tracking-wider">
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Why Choose Land Solution</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
-              Where Dreams Live
-            </h2>
-            <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
-              Be the first to browse exclusive listings in Bangladesh&apos;s most sought-after neighborhoods before they hit the open market.
-            </p>
+        {/* Top Header Row (Centered) */}
+        <div className="flex flex-col items-center text-center space-y-3 max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#800020]/10 border border-[#800020]/20 text-[#800020] text-xs font-semibold uppercase tracking-wider">
+            <Building2 className="w-3.5 h-3.5" />
+            <span>Why Choose Land Solution</span>
           </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
+            Where Dreams Live
+          </h2>
+          <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
+            Be the first to browse exclusive listings in Bangladesh&apos;s most sought-after neighborhoods before they hit the open market.
+          </p>
         </div>
 
         {/* Main Grid */}
@@ -86,7 +84,7 @@ export default function LandSolutionAbout() {
                 <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-sm shadow-2xs">
                   $0
                 </div>
-                <div>
+                <div className="text-left">
                   <p className="text-[10px] uppercase tracking-wider text-gray-500 font-medium">Upfront Cost</p>
                   <p className="text-xs font-bold text-gray-900">Paid at Closing</p>
                 </div>

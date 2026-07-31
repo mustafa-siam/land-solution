@@ -114,7 +114,7 @@ export default function Form({productId}:{productId: string}) {
         {/* Submit */}
         <button
           type="submit"
-          className="bg-ruby-wine text-white px-6 py-2 rounded hover:opacity-90 transition cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 font-semibold text-sm bg-gray-950 text-white rounded-xl hover:bg-[#800020] active:scale-[0.99] transition-all duration-300 shadow-md group shrink-0 cursor-pointer"
         >
           {isLoading ? "Loading..." : "Submit"}
         </button>

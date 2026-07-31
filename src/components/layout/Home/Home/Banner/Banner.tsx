@@ -114,7 +114,7 @@ export default function Banner() {
 
         {/* Title */}
         <h1 className="pointer-events-auto text-4xl sm:text-5xl lg:text-6xl text-white font-light max-w-3xl leading-tight mb-8 drop-shadow-lg tracking-tight">
-          <b className="font-extrabold text-white">Buy</b>, <b className="font-extrabold text-white">Sell</b> & <b className="font-extrabold text-[#800020]">Rent</b> with Ease
+          <b className="font-extrabold text-white">Buy</b>, <b className="font-extrabold text-white">Sell</b> & Rent with Ease
         </h1>
 
         {/* Search Widget Container */}

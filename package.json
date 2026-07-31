@@ -7,7 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "clear": "rm -rf node_modules bun.lock .next .clerk"
+    "clear": "rm -rf node_modules yarn.lock .next .clerk"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.33.7",
