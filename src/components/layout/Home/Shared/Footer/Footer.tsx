@@ -1,3 +1,6 @@
+"use client";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,8 +17,18 @@ import {
   ArrowUpRight, 
   Send 
 } from "lucide-react";
+import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 
 export default function Footer() {
+  // 1. Same exact logic as Banner
+  const { data, isLoading } = useGetAllCategoriesQuery({
+    page: 1,
+    limit: 1000,
+    search: "",
+  });
+
+  const categories: any[] = data?.data?.data || [];
+
   return (
     <footer className="bg-[#0f0f11] text-gray-300 font-sans border-t border-gray-800/60" id="footer">
       
@@ -46,7 +59,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           
-          {/* Column 1: Brand & Bio (Span 4) */}
+          {/* Column 1: Brand & Bio */}
           <div className="lg:col-span-4 space-y-5">
             <div className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-widest text-[#800020]">
@@ -61,7 +74,6 @@ export default function Footer() {
               Connecting buyers, sellers, and renters with premium residential and commercial properties across Bangladesh with architectural precision.
             </p>
 
-            {/* Social Media Links */}
             <div className="pt-2">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">
                 Follow Our Journey
@@ -88,7 +100,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Navigation Links (Span 2) */}
+          {/* Column 2: Navigation Links */}
           <div className="lg:col-span-2 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
               Quick Links
@@ -97,7 +109,6 @@ export default function Footer() {
               {[
                 { name: "About Us", href: "/about" },
                 { name: "Our Properties", href: "/properties" },
-                { name: "Testimonials", href: "/testimonials" },
                 { name: "Blog & Insights", href: "/blogs" },
                 { name: "Contact Us", href: "/contact" },
               ].map((item, idx) => (
@@ -113,32 +124,41 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Property Categories (Span 2) */}
+          {/* Column 3: Dynamic Categories using RTK Query */}
           <div className="lg:col-span-2 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
               Categories
             </h4>
             <ul className="space-y-2.5 text-xs">
-              {[
-                { name: "Buy Property", href: "/properties?type=buy" },
-                { name: "Sell Property", href: "/contact?intent=sell" },
-                { name: "Rent Homes", href: "/properties?type=rent" },
-                { name: "Commercial Space", href: "/properties?type=commercial" },
-                { name: "Luxury Staging", href: "/about#staging" },
-              ].map((item, idx) => (
-                <li key={idx}>
-                  <Link 
-                    href={item.href} 
-                    className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  href="/properties"
+                  className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
+                >
+                  All Properties
+                </Link>
+              </li>
+
+              {isLoading ? (
+                <li className="text-gray-500 animate-pulse">Loading...</li>
+              ) : categories.length === 0 ? (
+                <li className="text-gray-500">No categories found</li>
+              ) : (
+                categories.map((item: any) => (
+                  <li key={item._id}>
+                    <Link 
+                      href={`/properties?categoryId=${item._id}`} 
+                      className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block capitalize"
+                    >
+                      {item.title || item.name}
+                    </Link>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
 
-          {/* Column 4: Get in Touch & Newsletter (Span 4) */}
+          {/* Column 4: Newsletter & Contact */}
           <div className="lg:col-span-4 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
               Newsletter
@@ -148,7 +168,6 @@ export default function Footer() {
               Subscribe to get exclusive off-market listing updates directly to your inbox.
             </p>
 
-            {/* Form */}
             <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
               <div className="relative flex items-center">
                 <input
@@ -166,7 +185,6 @@ export default function Footer() {
               </div>
             </form>
 
-            {/* Direct Contact Info */}
             <div className="pt-2 space-y-2 text-xs text-gray-400">
               <div className="flex items-center gap-2.5">
                 <Phone className="w-3.5 h-3.5 text-[#800020]" />
