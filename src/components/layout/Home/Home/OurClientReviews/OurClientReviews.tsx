@@ -87,7 +87,7 @@ export default function OurClientReviews() {
           </h2>
           
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            Real experiences from homeowners, investors, and buyers across Bangladesh who found their dream properties with Land Solution.
+            Real experiences from homeowners, investors, and buyers across Bangladesh who found their dream properties with UrbanKeys.
           </p>
         </div>
 

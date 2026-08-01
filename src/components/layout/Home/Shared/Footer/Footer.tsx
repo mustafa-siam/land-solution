@@ -53,7 +53,7 @@ export default function Footer() {
                 Real Estate Partner
               </span>
               <h3 className="text-2xl font-bold tracking-tight text-white uppercase">
-                Land Solution
+                UrbanKeys
               </h3>
             </div>
             
@@ -170,15 +170,15 @@ export default function Footer() {
             <div className="pt-2 space-y-2 text-xs text-gray-400">
               <div className="flex items-center gap-2.5">
                 <Phone className="w-3.5 h-3.5 text-[#800020]" />
-                <span>+1 800-525-54-589</span>
+                <span>+880 1324-443323</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-3.5 h-3.5 text-[#800020]" />
-                <span>info@wdesignkit.com</span>
+                <span>contact@boomboxesolutions.com</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <MapPin className="w-3.5 h-3.5 text-[#800020]" />
-                <span>Dhaka, Bangladesh</span>
+                <span>49/A, Main Road, B-Block, Shahjalal uposhohor, Sylhet</span>
               </div>
             </div>
 
@@ -207,16 +207,16 @@ export default function Footer() {
 
         {/* Footer Bottom Metadata */}
         <div className="mt-6 pt-6 border-t border-gray-800/40 text-xs text-gray-500 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>© {new Date().getFullYear()} Land Solution. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} UrbanKeys. All rights reserved.</p>
           <p className="flex items-center gap-1">
-            <span>Design & Developed by</span>
+            <span>made by</span>
             <Link 
-              href="https://www.qrinux.com/" 
+              href="https://www.boomboxesolutions.com" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-300 hover:text-white font-medium underline underline-offset-4 decoration-gray-700 hover:decoration-white transition-all"
             >
-              Qrinux Inc
+              boombox e solutions
             </Link>
           </p>
         </div>

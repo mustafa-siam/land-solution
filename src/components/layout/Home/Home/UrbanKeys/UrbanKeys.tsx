@@ -13,7 +13,7 @@ import {
   Building2 
 } from "lucide-react";
 
-export default function LandSolutionAbout() {
+export default function UrbanKeysAbout() {
   const [activeTab, setActiveTab] = useState<"after" | "before">("after");
 
   const images = {
@@ -52,7 +52,7 @@ export default function LandSolutionAbout() {
         <div className="flex flex-col items-center text-center space-y-3 max-w-2xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#800020]/10 border border-[#800020]/20 text-[#800020] text-xs font-semibold uppercase tracking-wider">
             <Building2 className="w-3.5 h-3.5" />
-            <span>Why Choose Land Solution</span>
+            <span>Why Choose UrbanKeys</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
             Where Dreams Live
@@ -70,7 +70,7 @@ export default function LandSolutionAbout() {
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl shadow-xl border border-gray-200/80 bg-gray-50">
               <Image
                 src={images[activeTab]}
-                alt={`Land Solution Staging - ${activeTab}`}
+                alt={`UrbanKeys Staging - ${activeTab}`}
                 fill
                 priority
                 className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
@@ -153,7 +153,7 @@ export default function LandSolutionAbout() {
                 href="/contact"
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 font-semibold text-sm bg-gray-950 text-white rounded-xl hover:bg-[#800020] active:scale-[0.99] transition-all duration-300 shadow-md group"
               >
-                <span>Learn More About Land Solution</span>
+                <span>Learn More About UrbanKeys</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
