@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
 
   const textColorClass = isHome ? "text-white" : "text-gray-900";
   const textMutedClass = isHome ? "text-white/80 hover:text-white" : "text-gray-600 hover:text-[#800020]";
-  
+
   const activeLinkClass = isHome
     ? "text-white font-semibold underline underline-offset-8 decoration-[#800020] decoration-2"
     : "text-[#800020] font-semibold underline underline-offset-8 decoration-[#800020] decoration-2";
@@ -124,15 +124,26 @@ const Navbar: React.FC = () => {
         <div className="max-w-screen-xl mx-auto py-5 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="relative z-50">
-            <Image
-              width={160}
-              height={40}
-              src="/images/logo.svg"
-              alt="logo"
-              className={`h-7 md:h-8 w-fit transition-all ${
-                isHome ? "brightness-0 invert" : ""
-              }`}
-            />
+            {
+              isHome ? (
+                <Image
+                  width={160}
+                  height={40}
+                  src="/images/urbanKeys logo2.png"
+                  alt="logo"
+                  className={`h-14 md:h-10 w-auto transition-all `}
+                />
+              ) : (
+                <Image
+                  width={160}
+                  height={40}
+                  src="/images/urbanKeys logo4.png"
+                  alt="logo"
+                  className={`h-14 md:h-10 w-auto transition-all `}
+                />
+              )
+            }
+
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -141,9 +152,8 @@ const Navbar: React.FC = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-base md:text-lg font-medium transition-colors ${
-                  isActive(link.href) ? activeLinkClass : textMutedClass
-                }`}
+                className={`text-base md:text-lg font-medium transition-colors ${isActive(link.href) ? activeLinkClass : textMutedClass
+                  }`}
               >
                 {link.label}
               </Link>
@@ -153,9 +163,8 @@ const Navbar: React.FC = () => {
             <div className="relative group py-2">
               <button
                 type="button"
-                className={`flex items-center gap-1 text-base md:text-lg font-medium cursor-pointer transition-colors ${
-                  isSubmenuActive ? activeLinkClass : textMutedClass
-                }`}
+                className={`flex items-center gap-1 text-base md:text-lg font-medium cursor-pointer transition-colors ${isSubmenuActive ? activeLinkClass : textMutedClass
+                  }`}
               >
                 <span>Company</span>
                 <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
@@ -167,11 +176,10 @@ const Navbar: React.FC = () => {
                   <Link
                     key={subLink.href}
                     href={subLink.href}
-                    className={`block px-4 py-2.5 rounded-lg text-base md:text-lg font-medium transition-all ${
-                      isActive(subLink.href)
-                        ? "bg-gray-100 text-[#800020] font-semibold"
-                        : "text-gray-700 hover:bg-gray-50 hover:text-[#800020]"
-                    }`}
+                    className={`block px-4 py-2.5 rounded-lg text-base md:text-lg font-medium transition-all ${isActive(subLink.href)
+                      ? "bg-gray-100 text-[#800020] font-semibold"
+                      : "text-gray-700 hover:bg-gray-50 hover:text-[#800020]"
+                      }`}
                   >
                     {subLink.label}
                   </Link>
@@ -181,9 +189,8 @@ const Navbar: React.FC = () => {
 
             <Link
               href="/contact"
-              className={`text-base md:text-lg font-medium transition-colors ${
-                isActive("/contact") ? activeLinkClass : textMutedClass
-              }`}
+              className={`text-base md:text-lg font-medium transition-colors ${isActive("/contact") ? activeLinkClass : textMutedClass
+                }`}
             >
               Contact
             </Link>
@@ -191,9 +198,8 @@ const Navbar: React.FC = () => {
             {shouldShowAdminDashboard && (
               <Link
                 href="/dashboard"
-                className={`text-base md:text-lg font-medium transition-colors ${
-                  isActive("/dashboard") ? activeLinkClass : textMutedClass
-                }`}
+                className={`text-base md:text-lg font-medium transition-colors ${isActive("/dashboard") ? activeLinkClass : textMutedClass
+                  }`}
               >
                 Dashboard
               </Link>
@@ -202,9 +208,8 @@ const Navbar: React.FC = () => {
             {shouldShowUserDashboard && (
               <Link
                 href="/user-dashboard"
-                className={`text-base md:text-lg font-medium transition-colors ${
-                  isActive("/user-dashboard") ? activeLinkClass : textMutedClass
-                }`}
+                className={`text-base md:text-lg font-medium transition-colors ${isActive("/user-dashboard") ? activeLinkClass : textMutedClass
+                  }`}
               >
                 Dashboard
               </Link>
@@ -243,7 +248,7 @@ const Navbar: React.FC = () => {
             <Link href="/saved" className={`${textColorClass} hover:text-[#800020] transition-colors`}>
               <Heart size={22} />
             </Link>
-            
+
             {!needLogin && (
               <UserButton afterSignOutUrl="/" />
             )}
@@ -261,11 +266,10 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`absolute top-full left-0 w-full bg-white shadow-lg z-40 border-t border-gray-100 ${
-          isMobileMenuOpen
-            ? "translate-y-0 opacity-100 pointer-events-auto"
-            : "-translate-y-2 opacity-0 pointer-events-none"
-        } transition-all duration-300 ease-in-out lg:hidden`}
+        className={`absolute top-full left-0 w-full bg-white shadow-lg z-40 border-t border-gray-100 ${isMobileMenuOpen
+          ? "translate-y-0 opacity-100 pointer-events-auto"
+          : "-translate-y-2 opacity-0 pointer-events-none"
+          } transition-all duration-300 ease-in-out lg:hidden`}
       >
         <div className="flex flex-col space-y-4 py-6 px-6 text-gray-800">
           {primaryNavLinks.map((link) => (
@@ -273,11 +277,10 @@ const Navbar: React.FC = () => {
               key={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
               href={link.href}
-              className={`text-base md:text-lg font-medium transition-colors ${
-                isActive(link.href)
-                  ? "text-[#800020] font-semibold"
-                  : "text-gray-700 hover:text-[#800020]"
-              }`}
+              className={`text-base md:text-lg font-medium transition-colors ${isActive(link.href)
+                ? "text-[#800020] font-semibold"
+                : "text-gray-700 hover:text-[#800020]"
+                }`}
             >
               {link.label}
             </Link>
@@ -293,9 +296,8 @@ const Navbar: React.FC = () => {
               <span>Company</span>
               <ChevronDown
                 size={18}
-                className={`transition-transform duration-200 ${
-                  isMobileSubmenuOpen ? "rotate-180 text-[#800020]" : ""
-                }`}
+                className={`transition-transform duration-200 ${isMobileSubmenuOpen ? "rotate-180 text-[#800020]" : ""
+                  }`}
               />
             </button>
 
@@ -306,11 +308,10 @@ const Navbar: React.FC = () => {
                     key={subLink.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     href={subLink.href}
-                    className={`text-base font-medium transition-colors ${
-                      isActive(subLink.href)
-                        ? "text-[#800020] font-semibold"
-                        : "text-gray-600 hover:text-[#800020]"
-                    }`}
+                    className={`text-base font-medium transition-colors ${isActive(subLink.href)
+                      ? "text-[#800020] font-semibold"
+                      : "text-gray-600 hover:text-[#800020]"
+                      }`}
                   >
                     {subLink.label}
                   </Link>
@@ -322,11 +323,10 @@ const Navbar: React.FC = () => {
           <Link
             onClick={() => setIsMobileMenuOpen(false)}
             href="/contact"
-            className={`text-base md:text-lg font-medium transition-colors ${
-              isActive("/contact")
-                ? "text-[#800020] font-semibold"
-                : "text-gray-700 hover:text-[#800020]"
-            }`}
+            className={`text-base md:text-lg font-medium transition-colors ${isActive("/contact")
+              ? "text-[#800020] font-semibold"
+              : "text-gray-700 hover:text-[#800020]"
+              }`}
           >
             Contact
           </Link>
@@ -335,11 +335,10 @@ const Navbar: React.FC = () => {
             <Link
               onClick={() => setIsMobileMenuOpen(false)}
               href="/dashboard"
-              className={`text-base md:text-lg font-medium transition-colors ${
-                isActive("/dashboard")
-                  ? "text-[#800020] font-semibold"
-                  : "text-gray-700 hover:text-[#800020]"
-              }`}
+              className={`text-base md:text-lg font-medium transition-colors ${isActive("/dashboard")
+                ? "text-[#800020] font-semibold"
+                : "text-gray-700 hover:text-[#800020]"
+                }`}
             >
               Dashboard
             </Link>
@@ -349,11 +348,10 @@ const Navbar: React.FC = () => {
             <Link
               onClick={() => setIsMobileMenuOpen(false)}
               href="/user-dashboard"
-              className={`text-base md:text-lg font-medium transition-colors ${
-                isActive("/user-dashboard")
-                  ? "text-[#800020] font-semibold"
-                  : "text-gray-700 hover:text-[#800020]"
-              }`}
+              className={`text-base md:text-lg font-medium transition-colors ${isActive("/user-dashboard")
+                ? "text-[#800020] font-semibold"
+                : "text-gray-700 hover:text-[#800020]"
+                }`}
             >
               Dashboard
             </Link>
