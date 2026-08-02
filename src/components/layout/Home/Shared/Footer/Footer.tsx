@@ -59,7 +59,7 @@ export default function Footer() {
       {/* Main Footer Links & Information */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-          
+
           {/* Column 1: Brand & Bio */}
           <div className="lg:col-span-4 space-y-5">
             <div className="space-y-2">
@@ -141,8 +141,6 @@ export default function Footer() {
                 { name: "Buy Property", href: "/properties?type=buy" },
                 { name: "Sell Property", href: "/contact?intent=sell" },
                 { name: "Rent Homes", href: "/properties?type=rent" },
-                { name: "Commercial Space", href: "/properties?type=commercial" },
-                { name: "Luxury Staging", href: "/about#staging" },
               ].map((item, idx) => (
                 <li key={idx}>
                   <Link
@@ -226,10 +224,10 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} UrbanKeys. All rights reserved.</p>
           <p className="flex items-center gap-1">
             <span>made by</span>
-            <Link 
-              href="https://www.boomboxesolutions.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <Link
+              href="https://www.boomboxesolutions.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-300 hover:text-white font-medium underline underline-offset-4 decoration-gray-700 hover:decoration-white transition-all"
             >
               boombox e solutions
