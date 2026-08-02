@@ -1,24 +1,25 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { 
-  FaFacebookF, 
-  FaInstagram, 
-  FaLinkedinIn 
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn
 } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  ArrowUpRight, 
-  Send 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  ArrowUpRight,
+  Send
 } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="bg-[#0f0f11] text-gray-300 font-sans border-t border-gray-800/60" id="footer">
-      
+
       {/* Top Banner / Call To Action */}
       <div className="border-b border-gray-800/80 bg-gradient-to-r from-[#141417] via-[#0f0f11] to-[#141417]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -30,7 +31,7 @@ export default function Footer() {
               Connect with our estate experts to explore off-market listings across Bangladesh.
             </p>
           </div>
-          
+
           <div className="flex items-center gap-3 shrink-0">
             <Link href="/contact">
               <Button className="bg-[#800020] hover:bg-[#66001a] text-white px-6 py-2.5 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-2">
@@ -45,18 +46,24 @@ export default function Footer() {
       {/* Main Footer Links & Information */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-          
+
           {/* Column 1: Brand & Bio (Span 4) */}
           <div className="lg:col-span-4 space-y-5">
             <div className="space-y-2">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#800020]">
+              {/* <span className="text-xs font-semibold uppercase tracking-widest text-[#ffff]">
                 Real Estate Partner
-              </span>
-              <h3 className="text-2xl font-bold tracking-tight text-white uppercase">
-                Land Solution
-              </h3>
+              </span> */}
+              <Link href="/" className="relative z-50">
+                <Image
+                  width={160}
+                  height={40}
+                  src="/images/urbanKeys logo1.png"
+                  alt="logo"
+                  className={`h-18 md:h-14 w-auto transition-all `}
+                />
+              </Link>
             </div>
-            
+
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm">
               Connecting buyers, sellers, and renters with premium residential and commercial properties across Bangladesh with architectural precision.
             </p>
@@ -102,8 +109,8 @@ export default function Footer() {
                 { name: "Contact Us", href: "/contact" },
               ].map((item, idx) => (
                 <li key={idx}>
-                  <Link 
-                    href={item.href} 
+                  <Link
+                    href={item.href}
                     className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
                   >
                     {item.name}
@@ -127,8 +134,8 @@ export default function Footer() {
                 { name: "Luxury Staging", href: "/about#staging" },
               ].map((item, idx) => (
                 <li key={idx}>
-                  <Link 
-                    href={item.href} 
+                  <Link
+                    href={item.href}
                     className="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
                   >
                     {item.name}
@@ -143,7 +150,7 @@ export default function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white border-b border-gray-800 pb-2 inline-block border-r-2 pr-4 border-r-[#800020]">
               Newsletter
             </h4>
-            
+
             <p className="text-xs text-gray-400 leading-relaxed">
               Subscribe to get exclusive off-market listing updates directly to your inbox.
             </p>
@@ -210,10 +217,10 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} Land Solution. All rights reserved.</p>
           <p className="flex items-center gap-1">
             <span>Design & Developed by</span>
-            <Link 
-              href="https://www.qrinux.com/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <Link
+              href="https://www.qrinux.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-300 hover:text-white font-medium underline underline-offset-4 decoration-gray-700 hover:decoration-white transition-all"
             >
               Qrinux Inc

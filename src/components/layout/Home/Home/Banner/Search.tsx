@@ -47,10 +47,20 @@ export default function Search({ categories }: SearchProps) {
     isTrash: false,
   });
 
-  // Filter allowed categories ("buy" and "rent")
-  const filteredCategories = categories?.filter((item) =>
-    ["buy", "rent"].includes(item.title?.toLowerCase().trim())
-  );
+  const categoryOrder = ["buy", "sell", "rent"];
+
+  const normalizeTitle = (title?: string) =>
+    title?.toLowerCase().trim() ?? "";
+
+  const filteredCategories = categories
+    ?.filter((item) =>
+      categoryOrder.includes(normalizeTitle(item.title))
+    )
+    .sort(
+      (a, b) =>
+        categoryOrder.indexOf(normalizeTitle(a.title)) -
+        categoryOrder.indexOf(normalizeTitle(b.title))
+    );
 
   // Handle input/select changes
   const handleChange = (key: string, value: any) => {
@@ -130,11 +140,10 @@ export default function Search({ categories }: SearchProps) {
         <button
           type="button"
           onClick={() => handleChange("categoryId", "")}
-          className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${
-            filters.categoryId === ""
-              ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
-              : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
-          }`}
+          className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${filters.categoryId === ""
+            ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
+            : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
+            }`}
         >
           All Listings
         </button>
@@ -144,11 +153,10 @@ export default function Search({ categories }: SearchProps) {
             key={item._id}
             type="button"
             onClick={() => handleChange("categoryId", item._id)}
-            className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${
-              filters.categoryId === item._id
-                ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
-                : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
-            }`}
+            className={`flex-1 py-2.5 rounded-xl cursor-pointer text-xs sm:text-sm font-bold transition-all duration-200 ${filters.categoryId === item._id
+              ? "bg-white text-[#800020] shadow-sm border border-gray-200/60"
+              : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/50"
+              }`}
           >
             {item.title}
           </button>
@@ -205,9 +213,8 @@ export default function Search({ categories }: SearchProps) {
 
         {/* Advanced Filters Drawer Panel */}
         <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-[2000px] opacity-100 py-3 border-t border-gray-100" : "max-h-0 opacity-0 invisible"
-          }`}
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[2000px] opacity-100 py-3 border-t border-gray-100" : "max-h-0 opacity-0 invisible"
+            }`}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
             {renderSelect("Property Type", "propertyType", Constants.PropertyType)}
