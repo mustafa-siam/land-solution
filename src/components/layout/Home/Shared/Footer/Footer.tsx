@@ -70,7 +70,7 @@ export default function Footer() {
                 <Image
                   width={160}
                   height={40}
-                  src="images/urbanKeyslogo1.png"
+                  src="/images/urbankeyslogo1.png"
                   alt="logo"
                   className={`h-18 md:h-14 w-auto transition-all `}
                 />
