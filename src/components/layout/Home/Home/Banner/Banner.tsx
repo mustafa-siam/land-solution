@@ -52,7 +52,9 @@ export default function Banner() {
       {/* 1. Background Swiper Slider */}
       <Swiper
         spaceBetween={0}
+        slidesPerView={1}
         centeredSlides={true}
+        loop={true}
         autoplay={{
           delay: 4500,
           disableOnInteraction: false,
@@ -75,14 +77,14 @@ export default function Banner() {
       >
         <SwiperSlide>
           <img
-            className="w-full h-full object-cover scale-105 animate-pulse-subtle"
+            className="w-full h-full object-cover"
             src="https://i.ibb.co.com/d0PztQ1y/out.jpg"
             alt="Property Banner 1"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-full object-cover scale-105"
+            className="w-full h-full object-cover"
             src="https://i.ibb.co.com/4wQ83ZJP/apa.jpg"
             alt="Property Banner 2"
           />

@@ -50,17 +50,17 @@ export default function FaqItem() {
   };
 
   return (
-    <section className="bg-white py-16 px-4 sm:px-8 font-sans text-gray-900 border-t border-gray-100">
+    <section className="px-[5%] py-16 sm:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 font-sans text-gray-900 overflow-hidden relative mb-0">
       <div className="max-w-4xl mx-auto">
-        
+
         {/* Header & Subheading */}
         <div className="text-center mb-12">
-           <h1 className="text-4xl sm:text-5xl  font-bold tracking-tight text-gray-900">
-              Frequently Asked Questions
-            </h1>
-            <p className="text-gray-500 mt-4 text-sm sm:text-[15px] leading-relaxed">
+          <h1 className="text-4xl sm:text-5xl  font-bold tracking-tight text-gray-900">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-gray-500 mt-4 text-sm sm:text-[15px] leading-relaxed">
             Everything you need to know about working with us, our design process, and project expectations.
-            </p>
+          </p>
         </div>
 
         {/* FAQ Accordion List */}
@@ -71,11 +71,10 @@ export default function FaqItem() {
             return (
               <div
                 key={index}
-                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
-                  isOpen
-                    ? "border-indigo-200 bg-indigo-50/30 shadow-xs"
-                    : "border-gray-200 bg-white hover:border-gray-300"
-                }`}
+                className={`rounded-xl border transition-all duration-200 overflow-hidden ${isOpen
+                  ? "border-indigo-200 bg-indigo-50/30 shadow-xs"
+                  : "border-gray-200 bg-white hover:border-gray-300"
+                  }`}
               >
                 <button
                   onClick={() => toggleFAQ(index)}
@@ -94,9 +93,8 @@ export default function FaqItem() {
                   </div>
 
                   <div
-                    className={`p-2 rounded-full text-gray-500 transition-transform duration-300 flex-shrink-0 ${
-                      isOpen ? "rotate-180 bg-indigo-100 text-indigo-600" : "bg-gray-100"
-                    }`}
+                    className={`p-2 rounded-full text-gray-500 transition-transform duration-300 flex-shrink-0 ${isOpen ? "rotate-180 bg-indigo-100 text-indigo-600" : "bg-gray-100"
+                      }`}
                   >
                     <FaChevronDown className="text-xs" />
                   </div>
@@ -104,9 +102,8 @@ export default function FaqItem() {
 
                 {/* Animated Body Content */}
                 <div
-                  className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                  }`}
+                  className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
                 >
                   <div className="overflow-hidden">
                     <p className="px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed">

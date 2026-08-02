@@ -1,5 +1,6 @@
 import { FAQ } from '@/components/layout/Home/About/FAQ/FAQ'
 import Banner from '@/components/layout/Home/Home/Banner/Banner'
+import HomeTransformationSection from '@/components/layout/Home/Home/HomeTransformation/HomeTransformation'
 
 import FindNeighborhood from '@/components/layout/Home/Home/neighbourhood/neighborhood'
 import OurCategory from '@/components/layout/Home/Home/OurCategory/OurCategory'
@@ -12,23 +13,24 @@ import React from 'react'
 export default function page() {
   return (
     <div className='space-y-8'>
-      <Banner/>
-      <VerifiedProperties/>
+      <Banner />
+      <VerifiedProperties />
       <FindNeighborhood></FindNeighborhood>
+      <HomeTransformationSection></HomeTransformationSection>
       <UrbanKeys></UrbanKeys>
       {/* <OurCategory/> */}
-      <div className="px-[5%] pt-16">
-        {/* <div className="max-w-screen-xl mx-auto">
+      {/* <div className="px-[5%] pt-16">
+        <div className="max-w-screen-xl mx-auto">
           <Image
-          width={1000}
-          height={500}
-          src="/images/add2.png"
-          alt="add"
-          className="w-full h-fit"
+            width={1000}
+            height={500}
+            src="/images/add2.png"
+            alt="add"
+            className="w-full h-fit"
           />
-        </div> */}
-      </div>
-      <OurClientReviews/>
+        </div>
+      </div> */}
+      <OurClientReviews />
       <FAQ></FAQ>
     </div>
   )

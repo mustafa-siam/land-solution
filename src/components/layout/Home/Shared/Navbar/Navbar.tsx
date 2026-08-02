@@ -129,7 +129,7 @@ const Navbar: React.FC = () => {
                 <Image
                   width={160}
                   height={40}
-                  src="images/urbanKeyslogo2.png"
+                  src="/images/urbankeyslogo2.png"
                   alt="logo"
                   className={`h-14 md:h-10 w-auto transition-all `}
                 />
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
                 <Image
                   width={160}
                   height={40}
-                  src="images/urbanKeyslogo4.png"
+                  src="/images/urbankeyslogo4.png"
                   alt="logo"
                   className={`h-14 md:h-10 w-auto transition-all `}
                 />
