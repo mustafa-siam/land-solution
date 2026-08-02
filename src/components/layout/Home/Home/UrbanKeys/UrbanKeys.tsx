@@ -37,7 +37,7 @@ export default function UrbanKeysAbout() {
       <div className="max-w-screen-xl mx-auto relative z-10">
 
         {/* Top Header (Centered) */}
-        <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto mb-12">
+        <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#800020]/10 border border-[#800020]/20 text-[#800020] text-xs font-semibold uppercase tracking-wider">
             <Building2 className="w-3.5 h-3.5" />
             <span>About UrbanKeys</span>
