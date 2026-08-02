@@ -3,14 +3,12 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog"
 import { useGetAllPopupsQuery } from "@/redux/features/popup/popupApi"
 import Image from "next/image"
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+import { X, Building2, ArrowRight } from "lucide-react"
 
 export function Popup() {
   const router = useRouter()
@@ -33,11 +31,11 @@ export function Popup() {
     if (!popup?.title) return
 
     const today = new Date().toISOString().split("T")[0]
-    const lastShown = localStorage.getItem("allQiblaPopupShownDate")
+    const lastShown = localStorage.getItem("UrbanKeyPopupShownDate")
 
     if (lastShown !== today) {
       setOpen(true)
-      localStorage.setItem("allQiblaPopupShownDate", today)
+      localStorage.setItem("UrbanKeyPopupShownDate", today)
     }
   }, [popup])
 
@@ -46,38 +44,63 @@ export function Popup() {
     setOpen(false) // close popup first
 
     setTimeout(() => {
-      router.push(popup?.link) 
+      router.push(popup?.link)
     }, 100) // small delay so dialog can close smoothly
   }
-  if(!popup){
+
+  if (!popup) {
     return null
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="lg:text-3xl pr-5 text-start leading-tight">
-            {popup?.title}
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-[540px] w-[95vw] max-w-[500px] p-0 gap-0 bg-white border-0 shadow-2xl rounded-2xl overflow-hidden">
+        {/* Close Icon Only */}
+        <button
+          onClick={() => setOpen(false)}
+          className="absolute top-4 right-4 z-30 p-2 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 backdrop-blur-sm transition-all duration-200 shadow-lg"
+          aria-label="Close popup"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
-        <Image
-          width={500}
-          height={500}
-          src={popup?.image}
-          alt={popup?.title}
-          className="w-full h-fit"
-        />
+        {/* Main Image Section - Full Height */}
+        <div className="relative w-full h-[350px] sm:h-[400px] overflow-hidden">
+          <Image
+            width={540}
+            height={400}
+            src={popup?.image}
+            alt={popup?.title}
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={handleRedirect}
-            className="text-ruby-wine hover:bg-ruby-wine hover:text-white outline"
-          > Learn more 
-          </Button>
-        </DialogFooter>
+          {/* Content Overlaid on Image */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+            {/* Brand Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 mb-3">
+              <Building2 className="w-3.5 h-3.5 text-white" />
+              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-white">
+                UrbanKeys
+              </span>
+            </div>
+
+            {/* Title - Small and Nice */}
+            <h3 className="text-lg sm:text-xl font-semibold text-white leading-snug mb-4 drop-shadow-lg">
+              {popup?.title}
+            </h3>
+
+            {/* Learn More Button */}
+            <Button
+              onClick={handleRedirect}
+              className="bg-white text-[#800020] hover:bg-gray-100 font-semibold rounded-lg px-6 py-2.5 shadow-lg transition-all duration-300 text-sm"
+            >
+              <span>Learn More</span>
+              <ArrowRight className="w-4 h-4 ml-1.5" />
+            </Button>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   )
