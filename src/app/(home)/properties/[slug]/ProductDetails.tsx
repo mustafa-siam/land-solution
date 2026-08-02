@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { 
-  Dot, Forward, Heart, Phone, 
-  Bed, Bath, Maximize, Layers, 
-  ChefHat, Car, Flame, Compass, 
-  Zap, Droplets, GraduationCap, 
-  Hospital, Bus, 
-  Warehouse, Store, CheckCircle, 
+import {
+  Dot, Forward, Heart, Phone,
+  Bed, Bath, Maximize, Layers,
+  ChefHat, Car, Flame, Compass,
+  Zap, Droplets, GraduationCap,
+  Hospital, Bus,
+  Warehouse, Store, CheckCircle,
   Building, Camera, Video, ShieldCheck,
   UtensilsCrossed, X, ChevronLeft, ChevronRight
 } from "lucide-react";
@@ -106,8 +106,8 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
       if (url.includes("embed/")) return url;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       const match = url.match(regExp);
-      return match && match[2].length === 11 
-        ? `https://www.youtube.com/embed/${match[2]}` 
+      return match && match[2].length === 11
+        ? `https://www.youtube.com/embed/${match[2]}`
         : url;
     } catch {
       return url;
@@ -129,7 +129,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
   return (
     <div className="w-full overflow-x-hidden font-sans text-gray-800  px-6 ">
       <div className="max-w-7xl mx-autopy-6 space-y-8">
-        
+
         {/* HEADER SECTION */}
         <div>
           {/* Verification & Category Tags */}
@@ -175,7 +175,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
         {/* GALLERY GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-[300px] sm:h-[420px] lg:h-[480px]">
           {/* Main Image */}
-          <div 
+          <div
             onClick={() => setLightboxIndex(0)}
             className="lg:col-span-2 relative rounded-lg overflow-hidden bg-gray-100 group cursor-pointer"
           >
@@ -188,14 +188,14 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
             />
             {/* Gallery Overlay Badges */}
             <div className="absolute bottom-4 left-4 flex gap-2" onClick={(e) => e.stopPropagation()}>
-              <button 
+              <button
                 onClick={() => setLightboxIndex(0)}
                 className="flex items-center gap-1.5 bg-white/90 hover:bg-white backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer"
               >
                 <Camera size={14} /> {allImages.length} Photos
               </button>
               {product?.video && (
-                <button 
+                <button
                   onClick={() => setIsVideoModalOpen(true)}
                   className="flex items-center gap-1.5 bg-white/90 hover:bg-white backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded shadow-sm transition cursor-pointer"
                 >
@@ -207,7 +207,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
           {/* Side Thumbnails */}
           <div className="hidden lg:grid grid-rows-2 gap-3 h-full">
-            <div 
+            <div
               onClick={() => setLightboxIndex(allImages.length > 1 ? 1 : 0)}
               className="relative rounded-lg overflow-hidden bg-gray-100 group cursor-pointer"
             >
@@ -218,7 +218,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
                 className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               />
             </div>
-            <div 
+            <div
               onClick={() => setLightboxIndex(allImages.length > 2 ? 2 : 0)}
               className="relative rounded-lg overflow-hidden bg-gray-100 group cursor-pointer"
             >
@@ -234,7 +234,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
         {/* MAIN CONTENT + SIDEBAR GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          
+
           {/* LEFT COLUMN - OVERVIEW & AMENITIES */}
           <div className="lg:col-span-2 space-y-10">
 
@@ -273,9 +273,9 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
             {/* PROPERTY OVERVIEW / DESCRIPTION */}
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-4">Property Overview</h2>
-              <div 
+              <div
                 className="prose prose-gray max-w-none text-gray-600 leading-relaxed text-sm"
-                dangerouslySetInnerHTML={{ __html: product?.description || "No description provided." }} 
+                dangerouslySetInnerHTML={{ __html: product?.description || "No description provided." }}
               />
             </div>
 
@@ -317,7 +317,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <CheckCircle size={18}/>
+                    <CheckCircle size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Corridor</span>
@@ -327,7 +327,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Bed size={18}/>
+                    <Bed size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Bedrooms</span>
@@ -337,7 +337,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Bath size={18}/>
+                    <Bath size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Bathrooms</span>
@@ -347,7 +347,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Maximize size={18}/>
+                    <Maximize size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Size</span>
@@ -357,7 +357,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Warehouse size={18}/>
+                    <Warehouse size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Balcony</span>
@@ -367,7 +367,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Layers size={18}/>
+                    <Layers size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Floor Level</span>
@@ -377,7 +377,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Layers size={18}/>
+                    <Layers size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Total Floors</span>
@@ -387,7 +387,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Store size={18}/>
+                    <Store size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Drawing Space</span>
@@ -397,7 +397,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <UtensilsCrossed size={18}/>
+                    <UtensilsCrossed size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Dining Room</span>
@@ -407,7 +407,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <ChefHat size={18}/>
+                    <ChefHat size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Kitchen</span>
@@ -417,7 +417,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Car size={18}/>
+                    <Car size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Parking</span>
@@ -427,7 +427,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Flame size={18}/>
+                    <Flame size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Gas</span>
@@ -437,7 +437,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Compass size={18}/>
+                    <Compass size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Facing</span>
@@ -447,7 +447,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Zap size={18}/>
+                    <Zap size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Electricity</span>
@@ -457,7 +457,7 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50/70 border border-gray-100 rounded-lg">
                   <div className="p-2 bg-gray-200/60 rounded text-gray-700">
-                    <Droplets size={18}/>
+                    <Droplets size={18} />
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block">Water</span>
@@ -475,10 +475,10 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
             <div className="border border-gray-200 rounded-xl p-5 bg-white space-y-4 shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full overflow-hidden relative bg-gray-200 flex-shrink-0">
-                  <Image 
-                    src="/images/agent.jpg" 
-                    alt="Agent" 
-                    fill 
+                  <Image
+                    src="/images/agent.jpeg"
+                    alt="Agent"
+                    fill
                     className="object-cover"
                     onError={(e) => {
                       (e.target as HTMLElement).style.display = 'none';
@@ -489,39 +489,39 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
                   <h3 className="font-bold text-sm text-gray-900">Ahmed Zubayer</h3>
                   <p className="text-xs text-gray-400">SENIOR PORTFOLIO MANAGER</p>
                   <span className="inline-flex items-center text-[10px] text-gray-500 gap-1 mt-0.5">
-                    <ShieldCheck size={12} className="text-emerald-600"/> Institutional Portfolio
+                    <ShieldCheck size={12} className="text-emerald-600" /> Institutional Portfolio
                   </span>
                 </div>
               </div>
               <Link href={"/contact"}>
-              <button className="w-full cursor-pointer bg-gray-950 hover:bg-[#800020] text-white text-xs font-bold py-3 px-4 rounded transition uppercase tracking-wider rounded-xl">
-                Request Full Prospectus
-              </button>
+                <button className="w-full cursor-pointer bg-gray-950 hover:bg-[#800020] text-white text-xs font-bold py-3 px-4 rounded transition uppercase tracking-wider rounded-xl">
+                  Request Full Prospectus
+                </button>
               </Link>
-              
+
 
               <div className="border border-gray-200 rounded-xl mt-2 py-2.5 px-3 text-center flex items-center justify-center gap-2 text-sm font-semibold text-gray-800">
-                <Phone size={16} /> 
+                <Phone size={16} />
                 {product?.phone ? product.phone : "+880 1711-000000"}
               </div>
 
               {/* Save & Share Bar */}
               <div className="flex items-center justify-around pt-2 border-t border-gray-100 text-xs font-medium text-gray-600">
-                <button 
+                <button
                   onClick={handleShare}
                   className="flex items-center gap-1.5 hover:text-black transition cursor-pointer"
                 >
                   <Forward size={14} /> Share
                 </button>
                 <Dot className="text-gray-300" />
-                <button 
+                <button
                   onClick={handleSave}
                   className="flex items-center gap-1.5 hover:text-black transition cursor-pointer"
                 >
-                  <Heart 
-                    size={14} 
-                    className={isSaved ? "fill-red-500 text-red-500" : ""} 
-                  /> 
+                  <Heart
+                    size={14}
+                    className={isSaved ? "fill-red-500 text-red-500" : ""}
+                  />
                   {isSaved ? "Saved" : "Save"}
                 </button>
               </div>
@@ -616,9 +616,9 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
 
           {/* Map Rendering Container */}
           {product?.googleMap ? (
-            <div 
+            <div
               className="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
-              dangerouslySetInnerHTML={{ __html: product.googleMap }} 
+              dangerouslySetInnerHTML={{ __html: product.googleMap }}
             />
           ) : (
             <iframe
@@ -653,9 +653,9 @@ export default function ProductDetails({ product, isLoading }: { product: any, i
         {product?.termsAndConditions && (
           <div>
             <h2 className="text-xl font-bold text-gray-900 mb-4">Terms and Conditions</h2>
-            <div 
+            <div
               className="prose prose-gray max-w-none text-gray-600 text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: product?.termsAndConditions }} 
+              dangerouslySetInnerHTML={{ __html: product?.termsAndConditions }}
             />
           </div>
         )}

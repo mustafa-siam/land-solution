@@ -23,14 +23,14 @@ export default function VerifiedProperties() {
   );
 
   return (
-    <section className="px-6 lg:px-12 py-16 bg-gradient-to-b from-white via-gray-50/50 to-white font-sans text-gray-900 border-t border-b border-gray-200/60 relative overflow-hidden">
-      
+    <section className="px-6 lg:px-12 py-16 bg-gradient-to-b from-white via-gray-50/50 to-white font-sans text-gray-900 relative overflow-hidden">
+
       {/* Background Decorative Blur */}
       <div className="absolute top-1/3 left-10 w-72 h-72 bg-[#800020]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/3 right-10 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-10">
-        
+
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 pb-2">
           <div className="space-y-3 max-w-2xl">
@@ -76,8 +76,8 @@ export default function VerifiedProperties() {
         {!isLoading && allVerifiedData.length === 0 && (
           <div className="text-center py-20 bg-gray-50/80 rounded-2xl border border-dashed border-gray-200 p-8 max-w-lg mx-auto">
             <p className="text-gray-500 text-sm font-medium">No verified properties found at the moment.</p>
-            <Link 
-              href="/properties" 
+            <Link
+              href="/properties"
               className="mt-4 inline-flex items-center gap-1.5 text-[#800020] hover:underline font-semibold text-xs"
             >
               <span>Browse all properties</span>

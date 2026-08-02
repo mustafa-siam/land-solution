@@ -50,9 +50,8 @@ export function FAQ() {
   ];
 
   return (
-    <section className="px-[5%] py-16 sm:py-24 bg-gradient-to-b from-white via-gray-50/50 to-white relative z-20 font-sans text-gray-900">
+    <section className="px-[5%] py-16 sm:py-24 bg-gradient-to-b from-gray-50 via-gray-100/50 to-gray-50 relative z-20 font-sans text-gray-900">
       <div className="max-w-screen-lg mx-auto space-y-10">
-        
         {/* Section Header */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#800020]/10 border border-ruby-wine/20 text-[#800020] text-xs font-semibold uppercase tracking-wider">
@@ -91,7 +90,6 @@ export function FAQ() {
             ))}
           </Accordion>
         </div>
-
       </div>
     </section>
   );
