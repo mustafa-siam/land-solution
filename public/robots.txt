@@ -1,4 +1,4 @@
-# Robots policy for Land Solution
+# Robots policy for UrbanKeys
 # Update the Sitemap URL to your production site in deployment
 User-agent: *
 Allow: /

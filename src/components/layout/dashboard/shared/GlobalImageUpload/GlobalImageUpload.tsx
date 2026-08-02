@@ -128,7 +128,7 @@ export default function GlobalImageUpload({
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
             {urls.map((url: string | StaticImport, idx: React.Key | null | undefined) => (
               <div key={idx} className="relative group border rounded-md overflow-hidden">
-                <Image src={url} alt={`old-${idx}`} width={300} height={300} className="w-full h-24 object-cover" />
+                <Image src={url} alt={`old-${String(idx)}`} width={300} height={300} className="w-full h-24 object-cover" />
                 <p
                   onClick={() => handleRemoveOld(idx)}
                   className="absolute top-0 right-0 bg-black/60 text-white text-xs p-1 opacity-0 group-hover:opacity-100 hover:bg-red-600 cursor-pointer"
@@ -150,7 +150,7 @@ export default function GlobalImageUpload({
               const src = previewMap.current.get(file) ?? createPreview(file);
               return (
                 <div key={idx} className="relative group border rounded-md overflow-hidden">
-                  <Image src={src} alt={`new-${idx}`} width={300} height={300} className="w-full h-24 object-cover" />
+                  <Image src={src} alt={`new-${String(idx)}`} width={300} height={300} className="w-full h-24 object-cover" />
                   <button
                     onClick={() => handleRemoveNew(idx)}
                     className="absolute top-0 right-0 bg-black/60 text-white text-xs p-1 opacity-0 group-hover:opacity-100 hover:bg-red-600 cursor-pointer"

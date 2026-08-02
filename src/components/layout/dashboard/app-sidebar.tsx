@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
      data = {
       teams: [
       {
-        name: "Land Solution",
+        name: "UrbanKeys",
         // logo: LayoutDashboard,
         plan: "Admin Dashboard",
         url: "/",
@@ -204,7 +204,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   data = {
     teams: [
       {
-        name: "Land Solution",
+        name: "UrbanKeys",
         // logo: LayoutDashboard,
         plan: "User Dashboard",
         url: "/",

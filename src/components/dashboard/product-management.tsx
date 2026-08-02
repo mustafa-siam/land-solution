@@ -4,6 +4,23 @@
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+
+interface IData {
+  _id: string;
+  title: string;
+  image: string[];
+  status: string;
+  phone: string;
+  price: string;
+  location: string;
+  description: string;
+  termsAndConditions: string;
+  verification: boolean;
+  recommendation: boolean;
+  video?: string;
+  slug: string;
+  createdAt: string;
+}
 import {
   MoreHorizontal,
   Loader2,

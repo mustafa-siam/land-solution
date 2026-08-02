@@ -27,22 +27,22 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: {
-    default: "Land Solution",
-    template: "%s | Land Solution",
+    default: "UrbanKeys",
+    template: "%s | UrbanKeys",
   },
-  description: "Land Solution — Real estate, properties, buy, sell and rent",
+  description: "UrbanKeys — Real estate, properties, buy, sell and rent",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   openGraph: {
-    title: "Land Solution",
-    description: "Land Solution — Real estate, properties, buy, sell and rent",
+    title: "UrbanKeys",
+    description: "UrbanKeys — Real estate, properties, buy, sell and rent",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-    siteName: "Land Solution",
+    siteName: "UrbanKeys",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/images/seo.png`,
         width: 1200,
         height: 630,
-        alt: "Land Solution",
+        alt: "UrbanKeys",
       },
     ],
     locale: "en_US",
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Land Solution",
-    description: "Land Solution — Real estate, properties, buy, sell and rent",
+    title: "UrbanKeys",
+    description: "UrbanKeys — Real estate, properties, buy, sell and rent",
     site: process.env.NEXT_PUBLIC_TWITTER_HANDLE ?? undefined,
   },
   icons: {
@@ -95,7 +95,7 @@ export default function RootLayout({
                     __html: JSON.stringify({
                       "@context": "https://schema.org",
                       "@type": "Organization",
-                      name: "Land Solution",
+                      name: "UrbanKeys",
                       url: siteUrl,
                       logo: `${siteUrl}/images/logo.svg`,
                       sameAs: [],

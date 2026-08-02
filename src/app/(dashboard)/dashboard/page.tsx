@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   ShoppingBag, 
   MessageSquare, 
@@ -16,6 +17,34 @@ import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { useGetAllReviewsQuery } from "@/redux/features/review/reviewApi";
 import { useGetAllBlogsQuery } from "@/redux/features/blog/blogApi";
 
+// Defined interfaces to replace 'any'
+interface ProductItem {
+  _id: string;
+  title?: string;
+  location?: string;
+  price?: number | string;
+  status?: string;
+  image?: string[];
+}
+
+interface BlogItem {
+  _id: string;
+  title?: string;
+  description?: string;
+  status?: string;
+  image?: string;
+}
+
+interface ReviewItem {
+  _id: string;
+  title?: string;
+  designation?: string;
+  social?: string;
+  description?: string;
+  status?: string;
+  image?: string;
+}
+
 export default function DashboardHomePage() {
   const { data: productsRes, isLoading: productsLoading } = useGetAllProductsQuery({ page: 1, limit: 5 });
   const { data: reviewsRes, isLoading: reviewsLoading } = useGetAllReviewsQuery({ page: 1, limit: 5 });
@@ -29,9 +58,9 @@ export default function DashboardHomePage() {
     };
   }, [productsRes, reviewsRes, blogsRes]);
 
-  const recentProducts = useMemo(() => productsRes?.data?.data || [], [productsRes]);
-  const recentReviews = useMemo(() => reviewsRes?.data?.data || [], [reviewsRes]);
-  const recentBlogs = useMemo(() => blogsRes?.data?.data || [], [blogsRes]);
+  const recentProducts: ProductItem[] = useMemo(() => productsRes?.data?.data || [], [productsRes]);
+  const recentReviews: ReviewItem[] = useMemo(() => reviewsRes?.data?.data || [], [reviewsRes]);
+  const recentBlogs: BlogItem[] = useMemo(() => blogsRes?.data?.data || [], [blogsRes]);
 
   const isLoading = productsLoading || reviewsLoading || blogsLoading;
 
@@ -99,12 +128,12 @@ export default function DashboardHomePage() {
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-700/60">
             {recentProducts.length > 0 ? (
-              recentProducts.map((item: any) => (
+              recentProducts.map((item: ProductItem) => (
                 <div key={item._id} className="p-4 flex items-center justify-between hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-900 flex-shrink-0 overflow-hidden border border-slate-200 dark:border-slate-700">
+                    <div className="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-900 flex-shrink-0 overflow-hidden border border-slate-200 dark:border-slate-700 relative">
                       {item.image?.[0] ? (
-                        <img src={item.image[0]} alt={item.title} className="h-full w-full object-cover" />
+                        <Image src={item.image[0]} alt={item.title || "Product"} fill className="object-cover" />
                       ) : (
                         <ShoppingBag className="h-5 w-5 text-slate-400 m-auto mt-2.5" />
                       )}
@@ -155,12 +184,12 @@ export default function DashboardHomePage() {
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-700/60">
             {recentBlogs.length > 0 ? (
-              recentBlogs.map((item: any) => (
+              recentBlogs.map((item: BlogItem) => (
                 <div key={item._id} className="p-4 flex items-center justify-between hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-900 flex-shrink-0 overflow-hidden border border-slate-200 dark:border-slate-700">
+                    <div className="h-10 w-10 rounded-lg bg-slate-100 dark:bg-slate-900 flex-shrink-0 overflow-hidden border border-slate-200 dark:border-slate-700 relative">
                       {item.image ? (
-                        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+                        <Image src={item.image} alt={item.title || "Blog"} fill className="object-cover" />
                       ) : (
                         <FileText className="h-5 w-5 text-slate-400 m-auto mt-2.5" />
                       )}
@@ -206,12 +235,12 @@ export default function DashboardHomePage() {
         </div>
         <div className="divide-y divide-slate-100 dark:divide-slate-700/60">
           {recentReviews.length > 0 ? (
-            recentReviews.map((item: any) => (
+            recentReviews.map((item: ReviewItem) => (
               <div key={item._id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                 <div className="flex items-start gap-3.5 min-w-0">
-                  <div className="h-9 w-9 rounded-full bg-slate-100 dark:bg-slate-900 flex-shrink-0 overflow-hidden border border-slate-200 dark:border-slate-700">
+                  <div className="h-9 w-9 rounded-full bg-slate-100 dark:bg-slate-900 flex-shrink-0 overflow-hidden border border-slate-200 dark:border-slate-700 relative">
                     {item.image ? (
-                      <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+                      <Image src={item.image} alt={item.title || "Review"} fill className="object-cover" />
                     ) : (
                       <div className="h-full w-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-600 dark:text-slate-300">
                         {item.title ? item.title.charAt(0) : "U"}

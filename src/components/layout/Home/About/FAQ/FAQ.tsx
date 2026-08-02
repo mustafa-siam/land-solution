@@ -13,7 +13,7 @@ export function FAQ() {
   const faqList = [
     {
       id: "item-1",
-      question: "How do I start the process of buying a property through Land Solution?",
+      question: "How do I start the process of buying a property through UrbanKeys?",
       answer:
         "Simply browse our available listings or reach out to our team directly. We will schedule a personalized consultation to understand your requirements, arrange property visits, and guide you through legal checks, price negotiations, and final registration.",
     },
@@ -37,7 +37,7 @@ export function FAQ() {
     },
     {
       id: "item-5",
-      question: "Can Land Solution help with property valuation and legal verification?",
+      question: "Can UrbanKeys help with property valuation and legal verification?",
       answer:
         "Yes, absolutely. Our legal experts verify all land titles, land revenue records, and RS/BS mutation records to ensure clear title ownership before any deal is signed, protecting both buyers and sellers.",
     },
@@ -63,7 +63,7 @@ export function FAQ() {
             Frequently Asked Questions
           </h2>
           <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
-            Everything you need to know about buying, selling, and renting properties with Land Solution.
+            Everything you need to know about buying, selling, and renting properties with UrbanKeys.
           </p>
         </div>
 
