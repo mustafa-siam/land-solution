@@ -41,7 +41,7 @@ export default function HomeDecorationSection() {
         </div>
 
         {/* Interactive Before / After */}
-        <div className="relative aspect-[16/9] sm:aspect-[16/9] min-h-[280px] sm:min-h-[350px] md:min-h-[420px] overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-[28px] bg-gray-200 shadow-xl shadow-black/10">
+        <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-[28px] bg-gray-200 shadow-xl shadow-black/10">
           {/* Before Image */}
           <Image
             src="/images/before.jpg"

@@ -30,12 +30,12 @@ export default function Banner() {
 
   return (
     <div className="relative w-full h-[600px] sm:h-[650px] lg:h-[720px] overflow-hidden bg-gray-950 font-sans">
-      {/* Custom Navigation Controls (Placed outside or bound explicitly via refs) */}
+      {/* Custom Navigation Controls - Desktop: Side Centered */}
       <button
         ref={prevRef}
         type="button"
         aria-label="Previous Slide"
-        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/40 hover:bg-[#800020] border border-white/20 text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95 shadow-lg group"
+        className="hidden sm:flex absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/40 hover:bg-[#800020] border border-white/20 text-white items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95 shadow-lg group"
       >
         <span className="text-xl font-bold group-hover:-translate-x-0.5 transition-transform"><ChevronLeftIcon></ChevronLeftIcon> </span>
       </button>
@@ -44,10 +44,30 @@ export default function Banner() {
         ref={nextRef}
         type="button"
         aria-label="Next Slide"
-        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/40 hover:bg-[#800020] border border-white/20 text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95 shadow-lg group"
+        className="hidden sm:flex absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/40 hover:bg-[#800020] border border-white/20 text-white items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95 shadow-lg group"
       >
         <span className="text-xl font-bold group-hover:translate-x-0.5 transition-transform"><ChevronRightIcon></ChevronRightIcon></span>
       </button>
+
+      {/* Mobile Navigation - Bottom Right (Side by Side) */}
+      <div className="sm:hidden absolute bottom-6 right-4 z-30 flex flex-row gap-2">
+        <button
+          ref={prevRef}
+          type="button"
+          aria-label="Previous Slide"
+          className="w-10 h-10 rounded-full bg-black/40 hover:bg-[#800020] border border-white/20 text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95 shadow-lg"
+        >
+          <ChevronLeftIcon className="w-5 h-5" />
+        </button>
+        <button
+          ref={nextRef}
+          type="button"
+          aria-label="Next Slide"
+          className="w-10 h-10 rounded-full bg-black/40 hover:bg-[#800020] border border-white/20 text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95 shadow-lg"
+        >
+          <ChevronRightIcon className="w-5 h-5" />
+        </button>
+      </div>
 
       {/* 1. Background Swiper Slider */}
       <Swiper

@@ -94,11 +94,11 @@ export default function OurClientReviews() {
         {/* Carousel Wrapper */}
         <div className="relative px-2 sm:px-8">
 
-          {/* Custom Navigation Controls */}
+          {/* Desktop Navigation Controls - Side Centered */}
           <button
             onClick={() => api?.scrollPrev()}
             aria-label="Previous Slide"
-            className="absolute -left-2 sm:left-0 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 flex items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 z-30 focus:outline-none cursor-pointer group"
+            className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 z-30 focus:outline-none cursor-pointer group"
           >
             <FaChevronLeft className="text-xs transition-transform group-hover:-translate-x-0.5" />
           </button>
@@ -106,10 +106,29 @@ export default function OurClientReviews() {
           <button
             onClick={() => api?.scrollNext()}
             aria-label="Next Slide"
-            className="absolute -right-2 sm:right-0 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 flex items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 z-30 focus:outline-none cursor-pointer group"
+            className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 z-30 focus:outline-none cursor-pointer group"
           >
             <FaChevronRight className="text-xs transition-transform group-hover:translate-x-0.5" />
           </button>
+
+          {/* Mobile Navigation Controls - Bottom Center (Horizontal) */}
+          <div className="sm:hidden absolute bottom-0 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+            <button
+              onClick={() => api?.scrollPrev()}
+              aria-label="Previous Slide"
+              className="w-10 h-10 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 flex items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 focus:outline-none cursor-pointer group"
+            >
+              <FaChevronLeft className="text-xs transition-transform group-hover:-translate-x-0.5" />
+            </button>
+
+            <button
+              onClick={() => api?.scrollNext()}
+              aria-label="Next Slide"
+              className="w-10 h-10 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 flex items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 focus:outline-none cursor-pointer group"
+            >
+              <FaChevronRight className="text-xs transition-transform group-hover:translate-x-0.5" />
+            </button>
+          </div>
 
           <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
             <CarouselContent className="-ml-4 py-4">
