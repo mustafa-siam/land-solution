@@ -42,9 +42,9 @@ export default function HomeDecorationSection() {
 
         {/* Interactive Before / After */}
         <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-[28px] bg-gray-200 shadow-xl shadow-black/10">
-          {/* Before Image */}
+          {/* After Image */}
           <Image
-            src="/images/before.jpg"
+            src="/images/after.jpg"
             alt="Home before decoration and renovation"
             fill
             priority
@@ -52,7 +52,7 @@ export default function HomeDecorationSection() {
             sizes="100vw"
           />
 
-          {/* After Image */}
+          {/* Before Image */}
           <div
             className="absolute inset-0 overflow-hidden"
             style={{
@@ -60,7 +60,7 @@ export default function HomeDecorationSection() {
             }}
           >
             <Image
-              src="/images/after.jpg"
+              src="/images/before.jpg"
               alt="Home after decoration and renovation"
               fill
               priority
@@ -73,13 +73,13 @@ export default function HomeDecorationSection() {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
 
           {/* Before Label */}
-          <div className="pointer-events-none absolute bottom-3 sm:bottom-5 right-3 sm:right-5 rounded-full border border-white/30 bg-black/30 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold text-white backdrop-blur-md">
-            Before
+          <div className="pointer-events-none absolute bottom-3 sm:bottom-5 right-3 sm:right-5 rounded-full border border-white/30 bg-white/90  px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold  text-gray-950 backdrop-blur-md">
+            After
           </div>
 
           {/* After Label */}
-          <div className="pointer-events-none absolute bottom-3 sm:bottom-5 left-3 sm:left-5 rounded-full border border-white/30 bg-white/90 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold text-gray-950 backdrop-blur-md">
-            After
+          <div className="pointer-events-none absolute bottom-3 sm:bottom-5 left-3 sm:left-5 rounded-full border border-white/30 bg-black/30 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold text-white backdrop-blur-md">
+            Before
           </div>
 
           {/* Slider Line */}
