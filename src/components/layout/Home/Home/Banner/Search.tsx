@@ -190,7 +190,7 @@ export default function Search({ categories }: SearchProps) {
         </div>
 
         {/* Toggle Advanced Filters Button */}
-        <div className="flex justify-between items-center px-2 pt-1">
+        {/* <div className="flex justify-between items-center px-2 pt-1">
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
@@ -209,7 +209,7 @@ export default function Search({ categories }: SearchProps) {
               Reset Filters
             </button>
           )}
-        </div>
+        </div> */}
 
         {/* Advanced Filters Drawer Panel */}
         <div

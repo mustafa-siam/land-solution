@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useMemo, useState } from "react";
@@ -22,6 +21,16 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import { MessageSquareQuote, CheckCircle2 } from "lucide-react";
+
+type ReviewItem = {
+  image?: string;
+  title?: string;
+  name?: string;
+  designation?: string;
+  social?: string;
+  description?: string;
+  rating?: number | string;
+};
 
 const SocialIcon = ({ social, className = "text-base", ...props }: { social: string; className?: string }) => {
   if (!social) return null;
@@ -61,7 +70,7 @@ export default function OurClientReviews() {
     isTrash: false,
   });
 
-  const allData: any[] = useMemo(() => data?.data?.data || [], [data]);
+  const allData = useMemo<ReviewItem[]>(() => data?.data?.data || [], [data]);
   const skeletonArray = new Array(3).fill(null);
 
   return (
@@ -98,17 +107,17 @@ export default function OurClientReviews() {
           <button
             onClick={() => api?.scrollPrev()}
             aria-label="Previous Slide"
-            className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 z-30 focus:outline-none cursor-pointer group"
+            className="hidden sm:flex absolute -left-14 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 items-center justify-center transition-colors duration-300 ease-in-out hover:bg-[#800020] hover:text-white hover:border-[#800020] z-30 focus:outline-none cursor-pointer group"
           >
-            <FaChevronLeft className="text-xs transition-transform group-hover:-translate-x-0.5" />
+            <FaChevronLeft className="text-sm transition-transform duration-300 ease-out group-hover:-translate-x-0.5" />
           </button>
 
           <button
             onClick={() => api?.scrollNext()}
             aria-label="Next Slide"
-            className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 items-center justify-center transition-all duration-300 hover:bg-[#800020] hover:text-white hover:border-[#800020] hover:scale-105 active:scale-95 z-30 focus:outline-none cursor-pointer group"
+            className="hidden sm:flex absolute -right-14 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-gray-800 shadow-md border border-gray-200 items-center justify-center transition-colors duration-300 ease-in-out hover:bg-[#800020] hover:text-white hover:border-[#800020] z-30 focus:outline-none cursor-pointer group"
           >
-            <FaChevronRight className="text-xs transition-transform group-hover:translate-x-0.5" />
+            <FaChevronRight className="text-sm transition-transform duration-300 ease-out group-hover:translate-x-0.5" />
           </button>
 
           {/* Mobile Navigation Controls - Bottom Center (Horizontal) */}
@@ -139,7 +148,7 @@ export default function OurClientReviews() {
                     className="pl-4 md:basis-1/2 lg:basis-1/3"
                   >
                     <Skeleton className="w-full h-[240px] bg-gray-200/80 rounded-2xl" />
-                  </CarouselItem>
+                  </CarouselItem> 
                 ))
                 : allData?.map((item, index) => {
                   const rating = Number(item?.rating) || 5;
@@ -210,7 +219,7 @@ export default function OurClientReviews() {
                           </div>
 
                           {/* Review Description */}
-                          <p className="text-xs text-gray-600 leading-relaxed font-normal line-clamp-3 relative z-10 italic">
+                          <p className="text-sm text-gray-600 leading-relaxed font-normal line-clamp-3 relative z-10 italic">
                             &ldquo;{item?.description}&rdquo;
                           </p>
                         </div>

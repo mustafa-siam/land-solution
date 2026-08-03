@@ -51,20 +51,36 @@ export default function UrbanKeysAbout() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
 
           {/* Left Side: Image */}
-          <div className="relative order-2 lg:order-1 flex items-center">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-2xl">
-              <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85"
-                alt="Premium Properties by UrbanKeys"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+          <div className="relative order-2 lg:order-1 flex items-center group">
+            {/* Animated border container */}
+            <div className="relative aspect-[4/3] w-full">
+              {/* Main image container */}
+              <div className="relative h-full w-full rounded-2xl shadow-2xl overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85"
+                  alt="Premium Properties by UrbanKeys"
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#800020]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Shine effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+              </div>
+
+              {/* Animated corner accents - appear on hover */}
+              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-[#800020]/40 rounded-tl-xl transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:-top-4 group-hover:-left-4" />
+              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-[#800020]/40 rounded-tr-xl transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:-top-4 group-hover:-right-4" />
+              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-[#800020]/40 rounded-bl-xl transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:-bottom-4 group-hover:-left-4" />
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-[#800020]/40 rounded-br-xl transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:-bottom-4 group-hover:-right-4" />
             </div>
 
             {/* Floating Badge - Positioned Inside Image */}
-            <div className="absolute bottom-6 left-6 bg-[#800020] text-white p-5 rounded-2xl shadow-xl">
+            <div className="absolute bottom-6 left-6 bg-[#800020] text-white p-5 rounded-2xl shadow-xl z-10">
               <p className="text-3xl font-bold">500+</p>
               <p className="text-xs opacity-90">Properties Listed</p>
             </div>

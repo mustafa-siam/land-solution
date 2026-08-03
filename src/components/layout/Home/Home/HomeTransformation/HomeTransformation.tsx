@@ -6,10 +6,10 @@ import { ArrowRight, MoveHorizontal, Paintbrush } from "lucide-react";
 import { useState } from "react";
 
 export default function HomeDecorationSection() {
-  const [sliderPosition, setSliderPosition] = useState(55);
+  const [sliderPosition, setSliderPosition] = useState(50);
 
   return (
-    <section className="px-[5%] py-12 sm:py-16 md:py-24">
+    <section className="px-[5%] py-12 sm:py-16 md:py-24 mb-0">
       <div className="mx-auto max-w-screen-xl">
         {/* Section Header */}
         <div className="mb-6 sm:mb-8 flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -41,7 +41,7 @@ export default function HomeDecorationSection() {
         </div>
 
         {/* Interactive Before / After */}
-        <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px] overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-[28px] bg-gray-200 shadow-xl shadow-black/10">
+        <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[600px] xl:h-[650px] overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-[28px] bg-gray-200 shadow-xl shadow-black/10">
           {/* After Image */}
           <Image
             src="/images/after.jpg"
