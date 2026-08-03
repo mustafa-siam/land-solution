@@ -6,7 +6,7 @@ import { ArrowRight, MoveHorizontal, Paintbrush } from "lucide-react";
 import { useState } from "react";
 
 export default function HomeDecorationSection() {
-  const [sliderPosition, setSliderPosition] = useState(55);
+  const [sliderPosition, setSliderPosition] = useState(50);
 
   return (
     <section className="px-[5%] py-12 sm:py-16 md:py-24 mb-0">
