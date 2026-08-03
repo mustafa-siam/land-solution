@@ -18,6 +18,17 @@ import {
 import { MessageSquareQuote } from "lucide-react";
 import { HomePagination } from "@/components/layout/Home/Shared/HomePagination/HomePagination";
 
+type ReviewItem = {
+  _id?: string;
+  image?: string;
+  title?: string;
+  name?: string;
+  designation?: string;
+  social?: string;
+  description?: string;
+  rating?: number | string;
+};
+
 const SocialIcon = ({ social, className = "text-base", ...props }: { social: string; className?: string }) => {
   if (!social) return null;
 
@@ -55,7 +66,7 @@ export default function Page() {
     isTrash: false,
   });
 
-  const allData = useMemo(() => data?.data?.data || [], [data]);
+  const allData = useMemo<ReviewItem[]>(() => data?.data?.data || [], [data]);
   const meta = useMemo(
     () => data?.data?.meta || { page: 1, limit: 10, total: 0, totalPages: 0 },
     [data]
@@ -93,7 +104,7 @@ export default function Page() {
                   <Skeleton className="w-full h-52 rounded-2xl" />
                 </div>
               ))
-              : allData?.map((item: Record<string, unknown>) => {
+              : allData?.map((item) => {
                 const rating = Number(item?.rating) || 5;
 
                 return (
