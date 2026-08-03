@@ -45,7 +45,7 @@ export default function HomeDecorationSection() {
           {/* After Image */}
           <Image
             src="/images/after.jpg"
-            alt="Home before decoration and renovation"
+            alt="Home after decoration and renovation"
             fill
             priority
             className="object-cover"
@@ -61,7 +61,7 @@ export default function HomeDecorationSection() {
           >
             <Image
               src="/images/before.jpg"
-              alt="Home after decoration and renovation"
+              alt="Home before decoration and renovation"
               fill
               priority
               className="object-cover"
