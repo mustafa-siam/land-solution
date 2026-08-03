@@ -58,7 +58,7 @@ export function HomePagination({
             size="sm"
             onClick={goToFirstPage}
             disabled={page === 1 || isFetching}
-            className="h-10 w-10 p-1 rounded-none"
+            className="h-10 w-10 p-1 rounded-lg"
           >
             <ChevronsLeft className="h-4 w-4" />
           </Button>
@@ -68,7 +68,7 @@ export function HomePagination({
             size="sm"
             onClick={goToPrevPage}
             disabled={page === 1 || isFetching}
-            className="h-10 w-10 p-1 rounded-none"
+            className="h-10 w-10 p-1 rounded-lg"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -81,11 +81,11 @@ export function HomePagination({
                 size="sm"
                 onClick={() => typeof num === "number" && onPageChange(num)}
                 disabled={typeof num !== "number" || isFetching}
-                className={`h-10 min-w-10 rounded-none ${
+                className={`h-10 min-w-10 rounded-lg ${
                   typeof num !== "number" ? "cursor-default" : ""
                 } ${
                   num === page
-                    ? "bg-ruby-wine hover:bg-ruby-wine text-white"
+                    ? "bg-[#800020] hover:bg-[#800020] text-white"
                     : ""
                 }`}
               >
@@ -105,7 +105,7 @@ export function HomePagination({
                 const newPage = parseInt(e.target.value);
                 if (newPage >= 1 && newPage <= totalPages) onPageChange(newPage);
               }}
-              className="h-8 w-16 text-center"
+              className="h-8 w-16 text-center rounded-lg"
               disabled={isFetching}
             />
             <span className="text-sm text-gray-500">/ {totalPages}</span>
@@ -116,7 +116,7 @@ export function HomePagination({
             size="sm"
             onClick={goToNextPage}
             disabled={page === totalPages || isFetching}
-            className="h-10 w-10 p-1 rounded-none"
+            className="h-10 w-10 p-1 rounded-lg"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
@@ -126,12 +126,12 @@ export function HomePagination({
             size="sm"
             onClick={goToLastPage}
             disabled={page === totalPages || isFetching}
-            className="h-10 w-10 p-1 rounded-none"
+            className="h-10 w-10 p-1 rounded-lg"
           >
             <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>
-        <div className="text-sm text-slate-gray dark:text-dark-slate-gray">
+        <div className="text-sm text-gray-500">
           Page {page} of {totalPages}
         </div>
 
