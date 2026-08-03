@@ -19,7 +19,7 @@ export default function Page() {
     isTrash: false,
   });
 
-  const allData: any[] = useMemo(() => data?.data?.data || [], [data]);
+  const allData = useMemo(() => data?.data?.data || [], [data]);
   const meta = useMemo(
     () => data?.data?.meta || { page: 1, limit: 10, total: 0, totalPages: 0 },
     [data]
@@ -57,7 +57,7 @@ export default function Page() {
                     <Skeleton className="w-full h-60 rounded-2xl" />
                   </div>
                 ))
-              : allData?.map((item) => <BlogCard key={item?._id} item={item} />)}
+              : allData?.map((item: Record<string, unknown>) => <BlogCard key={item?._id as string} item={item} />)}
           </div>
 
           <HomePagination

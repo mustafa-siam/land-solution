@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useMemo, useState } from "react";
@@ -22,6 +21,16 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import { MessageSquareQuote, CheckCircle2 } from "lucide-react";
+
+type ReviewItem = {
+  image?: string;
+  title?: string;
+  name?: string;
+  designation?: string;
+  social?: string;
+  description?: string;
+  rating?: number | string;
+};
 
 const SocialIcon = ({ social, className = "text-base", ...props }: { social: string; className?: string }) => {
   if (!social) return null;
@@ -61,7 +70,7 @@ export default function OurClientReviews() {
     isTrash: false,
   });
 
-  const allData: any[] = useMemo(() => data?.data?.data || [], [data]);
+  const allData = useMemo<ReviewItem[]>(() => data?.data?.data || [], [data]);
   const skeletonArray = new Array(3).fill(null);
 
   return (
@@ -139,7 +148,7 @@ export default function OurClientReviews() {
                     className="pl-4 md:basis-1/2 lg:basis-1/3"
                   >
                     <Skeleton className="w-full h-[240px] bg-gray-200/80 rounded-2xl" />
-                  </CarouselItem>
+                  </CarouselItem> 
                 ))
                 : allData?.map((item, index) => {
                   const rating = Number(item?.rating) || 5;

@@ -55,7 +55,7 @@ export default function Page() {
     isTrash: false,
   });
 
-  const allData: any[] = useMemo(() => data?.data?.data || [], [data]);
+  const allData = useMemo(() => data?.data?.data || [], [data]);
   const meta = useMemo(
     () => data?.data?.meta || { page: 1, limit: 10, total: 0, totalPages: 0 },
     [data]
@@ -93,7 +93,7 @@ export default function Page() {
                   <Skeleton className="w-full h-52 rounded-2xl" />
                 </div>
               ))
-              : allData?.map((item) => {
+              : allData?.map((item: Record<string, unknown>) => {
                 const rating = Number(item?.rating) || 5;
 
                 return (
