@@ -127,19 +127,19 @@ const Navbar: React.FC = () => {
             {
               isHome ? (
                 <Image
-                  width={160}
-                  height={40}
+                  width={200}
+                  height={200}
                   src="/images/urbankeyslogo2.png"
                   alt="logo"
-                  className={`h-14 md:h-10 w-auto transition-all `}
+                  className={`h-10 w-auto transition-all `}
                 />
               ) : (
                 <Image
-                  width={160}
-                  height={40}
+                  width={200}
+                  height={200}
                   src="/images/urbankeyslogo4.png"
                   alt="logo"
-                  className={`h-14 md:h-10 w-auto transition-all `}
+                  className={`h-10 w-auto transition-all `}
                 />
               )
             }

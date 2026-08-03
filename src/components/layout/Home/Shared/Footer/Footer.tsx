@@ -68,11 +68,11 @@ export default function Footer() {
               </span> */}
               <Link href="/" className="relative z-50">
                 <Image
-                  width={160}
-                  height={40}
-                  src="/images/urbankeyslogo1.png"
+                  width={200}
+                  height={200}
+                  src="/images/urbankeyslogo2.png"
                   alt="logo"
-                  className={`h-18 md:h-14 w-auto transition-all `}
+                  className={`h-10 md:h-12 w-auto transition-all `}
                 />
               </Link>
             </div>
